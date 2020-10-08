@@ -116,7 +116,7 @@
           space to work alongside others.
         </h2>
         <% } else { %>
-        <h1>Welcome, <% user['displayName'] %>!</h1>
+        <h1>Welcome, <%= user.displayName %>!</h1>
         <% } %> <% if (!user) { %>
         <a href="/signUp" class="btn-get-started scrollto">Get Started</a>
         <% } %>
