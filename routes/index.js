@@ -6,6 +6,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/signUp', function(req, res, next) {
+  res.render('signup');
+});
+
+router.get('/login', function(req, res, next) {
+  res.render('login');
+});
+
 router.post('/signUp', function(req, res, next) {
   const username=req.body.username;
   const email=req.body.email;
