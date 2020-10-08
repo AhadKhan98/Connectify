@@ -3,8 +3,8 @@ var router = express.Router();
 const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
 
+/* FIREBASE AUTH LISTENER */
 let currentUser = firebase.auth().currentUser;
-
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     currentUser = user;
@@ -15,21 +15,21 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-// HANDLER FUNCTIONS
+/* HANDLER FUNCTIONS */
 
-//HOME PAGE
+/* HOME PAGE */
 router.get("/", function (req, res, next) {
   res.render("index", { user: currentUser });
 });
 
-// SIGN UP FUNCTIONALITY
+/* SIGN UP FUNCTIONALITY */
 
 // Show Sign Up Page
 router.get("/signUp", function (req, res, next) {
   res.render("signup");
 });
 
-// Process Form Submit
+// Form Submit (POST METHOD)
 router.post("/signup/submit", function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
@@ -42,11 +42,14 @@ router.post("/signup/submit", function (req, res, next) {
   });
 });
 
-// SIGN IN FUNCTIONALITY
+/* SIGN IN FUNCTIONALITY */
+
+// Show Login Page
 router.get("/login", function (req, res, next) {
   res.render("login");
 });
 
+// Form Submit (POST METHOD)
 router.post("/login/submit", function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
@@ -56,14 +59,12 @@ router.post("/login/submit", function (req, res, next) {
       res.redirect("/");
     }
   });
-  // res.redirect("/");
-  // firebase.auth().onAuthStateChanged((user) => {
-  //   if (user) {
-  //     res.redirect("/");
-  //   } else {
-  //     res.redirect("/login");
-  //   }
-  // });
+});
+
+/* LOG OUT FUNCTIONALITY */
+router.get("/logout", function (req, res, next) {
+  firebaseModel.authLogOut();
+  res.redirect("/");
 });
 
 module.exports = router;

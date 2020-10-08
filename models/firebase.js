@@ -39,4 +39,21 @@ const authSignIn = (email, password) => {
     });
 };
 
-module.exports = { database, authSignUp, authSignIn };
+const authLogOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(function () {
+      console.log("USER SIGNED OUT");
+    })
+    .catch(function (error) {
+      console.log("ERROR SIGNING USER OUT", error);
+    });
+};
+
+module.exports = {
+  database,
+  authSignUp,
+  authSignIn,
+  authLogOut,
+};
