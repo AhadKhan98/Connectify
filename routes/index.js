@@ -35,8 +35,15 @@ router.post("/signup/submit", function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;
-  firebaseModel.authSignUp(name, email, password).then((user) => {
-    res.redirect("/");
+  firebaseModel.authSignUp(name, email, password).then((result) => {
+    if (typeof result === "string") {
+      let errorMessage = result;
+      console.log("ERROR MESSAGE WHILE SIGNING UP", result)
+      res.redirect("/signup")
+    } else {
+      res.redirect("/");
+    }
+    
   });
 });
 
@@ -51,9 +58,11 @@ router.get("/login", function (req, res, next) {
 router.post("/login/submit", function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
-  firebaseModel.authSignIn(email, password);
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
+  firebaseModel.authSignIn(email, password).then(result => {
+    if (typeof result === "string") {
+      let errorMessage = "Failed to log in. Please re-check your email and password.";
+      res.redirect("/login")
+    } else {
       res.redirect("/");
     }
   });

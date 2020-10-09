@@ -24,18 +24,19 @@ const authSignUp = (name, email, password) => {
     })
     .catch(function (error) {
       // Handle Errors here.
-      console.log("USER SIGNUP FAIL");
-      console.log("ERROR: ", error);
+      return error.message;
     });
 };
 
 const authSignIn = (email, password) => {
-  firebase
+  return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((result) => result)
+    .then((result) => {
+      return result
+    })
     .catch((error) => {
-      console.log("LOG IN FAIL", error);
+      return error.message;
     });
 };
 
