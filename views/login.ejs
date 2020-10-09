@@ -110,7 +110,10 @@
               </div>
               <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-center text-muted mb-4">
-                  <small>Or sign in with credentials</small>
+                  <small>Or sign in with credentials</small><br>
+                  <% if (errorMessage) { %>
+                  <small style="color:red"><%= errorMessage %></small>
+                  <% } %>
                 </div>
                 <form method="post" action="/login/submit" role="form">
                   <div class="form-group mb-3">
