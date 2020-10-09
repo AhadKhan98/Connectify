@@ -1,31 +1,68 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const database = require('../models/firebase');
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const firebaseModel = require("../models/firebase");
+const firebase = require("firebase");
+
+/* FIREBASE AUTH LISTENER */
+let currentUser = firebase.auth().currentUser;
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    currentUser = user;
+    console.log("OTHER ATTRIBUTES ", currentUser);
+    console.log("WE HAVE A USER", currentUser.displayName);
+  } else {
+    currentUser = null;
+    console.log("NO USER");
+  }
 });
 
-router.get('/signUp', function(req, res, next) {
-  res.render('signup');
+/* HANDLER FUNCTIONS */
+
+/* HOME PAGE */
+router.get("/", function (req, res, next) {
+  res.render("index", { user: currentUser });
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('login');
+/* SIGN UP FUNCTIONALITY */
+
+// Show Sign Up Page
+router.get("/signUp", function (req, res, next) {
+  res.render("signup");
 });
 
-router.post('/signUp', function(req, res, next) {
-  const username=req.body.username;
-  const email=req.body.email;
+// Form Submit (POST METHOD)
+router.post("/signup/submit", function (req, res, next) {
+  const email = req.body.email;
   const password = req.body.password;
-  const subjects = req.body.subjects;
-  const online = req.body.online;
-  const user={username,email,password,subjects,online}
-  database.ref('users').push(user).then((ref)=>{
-    res.send(200)
-  }).catch((err)=>{
-    res.send(err)
-  })
+  const name = req.body.name;
+  firebaseModel.authSignUp(name, email, password).then((user) => {
+    res.redirect("/");
+  });
+});
+
+/* SIGN IN FUNCTIONALITY */
+
+// Show Login Page
+router.get("/login", function (req, res, next) {
+  res.render("login");
+});
+
+// Form Submit (POST METHOD)
+router.post("/login/submit", function (req, res, next) {
+  const email = req.body.email;
+  const password = req.body.password;
+  firebaseModel.authSignIn(email, password);
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      res.redirect("/");
+    }
+  });
+});
+
+/* LOG OUT FUNCTIONALITY */
+router.get("/logout", function (req, res, next) {
+  firebaseModel.authLogOut();
+  res.redirect("/");
 });
 
 module.exports = router;
