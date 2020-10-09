@@ -16,7 +16,7 @@ const database = firebase.database();
 
 // Firebase Auth Sign Up Handler
 const authSignUp = (name, email, password) => {
-  firebase
+  return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((result) => {

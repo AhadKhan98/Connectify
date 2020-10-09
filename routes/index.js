@@ -8,6 +8,7 @@ let currentUser = firebase.auth().currentUser;
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     currentUser = user;
+    console.log("OTHER ATTRIBUTES ", currentUser);
     console.log("WE HAVE A USER", currentUser.displayName);
   } else {
     currentUser = null;
@@ -34,11 +35,8 @@ router.post("/signup/submit", function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;
-  firebaseModel.authSignUp(name, email, password);
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      res.redirect("/");
-    }
+  firebaseModel.authSignUp(name, email, password).then((user) => {
+    res.redirect("/");
   });
 });
 
