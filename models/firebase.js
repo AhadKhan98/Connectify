@@ -52,9 +52,30 @@ const authLogOut = () => {
     });
 };
 
+const googleSignIn = (google_id_token) => {
+  var credential = firebase.auth.GoogleAuthProvider.credential(google_id_token);
+  
+  return firebase.auth().signInWithCredential(credential)
+  .then((user)=>{
+    console.log('NEW GFIREBASE USER', user);
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    console.log("GOOGLE USER TO FIREBASE ERROR",errorCode,errorMessage,email,credential)
+    // ...
+  });
+}
+
 module.exports = {
   database,
   authSignUp,
   authSignIn,
   authLogOut,
+  googleSignIn,
 };
