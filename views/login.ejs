@@ -12,6 +12,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="518932760125-m9tqgoo3nmkedpghqpcvlpeeai7qdcrn.apps.googleusercontent.com">
+
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -106,6 +109,18 @@
                     /></span>
                     <span class="btn-inner--text">Google</span>
                   </a>
+                  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                  <script>
+                    
+                    function onSignIn(googleUser) {
+                      const profile = googleUser.getBasicProfile();
+                      const id_token = googleUser.getAuthResponse().id_token;
+                      window.location = 'googlesignintoken/?id_token='+id_token;
+                      
+                    }
+                    
+                  </script>
+
                 </div>
               </div>
               <div class="card-body px-lg-5 py-lg-5">

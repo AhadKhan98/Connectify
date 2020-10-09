@@ -48,6 +48,12 @@ router.post("/signup/submit", function (req, res, next) {
 
 /* SIGN IN FUNCTIONALITY */
 
+// Google Sign In
+router.get("/googlesignintoken", function(req,res,next) {
+  console.log("GOT GOOGLE SIGN IN TOKEN");
+  res.redirect('/');
+});
+
 // Show Login Page
 router.get("/login", function (req, res, next) {
   res.render("login", {errorMessage:""});
