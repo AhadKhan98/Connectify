@@ -70,7 +70,18 @@ const googleSignIn = (google_id_token) => {
     console.log("GOOGLE USER TO FIREBASE ERROR",errorCode,errorMessage,email,credential)
     // ...
   });
-}
+};
+
+const githubSignIn = (access_token) => {
+  const credential = firebase.auth.GithubAuthProvider.credential(access_token);
+  return firebase.auth().signInWithCredential(credential)
+  .then((user) => {
+    console.log('NEW GITHUB USER', user);
+  })
+  .catch((error) => {
+    console.log("GITHUB USER TO FIREBASE ERROR", error.code, error.message, error.email, error.credential);
+  })
+};
 
 module.exports = {
   database,
@@ -78,4 +89,5 @@ module.exports = {
   authSignIn,
   authLogOut,
   googleSignIn,
+  githubSignIn,
 };

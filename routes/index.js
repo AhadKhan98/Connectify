@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
+const githubAuth = require("../models/githubAuth");
 
 /* FIREBASE AUTH LISTENER */
 let currentUser = firebase.auth().currentUser;
@@ -47,6 +48,34 @@ router.post("/signup/submit", function (req, res, next) {
 });
 
 /* SIGN IN FUNCTIONALITY */
+
+// GitHub Sign In
+githubAuth.on('error', (error) => {
+  console.log("ERROR USING GITHUB LOGIN", error);
+});
+
+githubAuth.on('token', (token, res) => {
+  console.log("GOT TOKEN FROM GITHUB", token);
+  firebaseModel.githubSignIn(token.access_token).then(result => {
+    if (typeof result === "string") {
+      res.render("login", {errorMessage:"Failed to sign in. Please try again."})
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
+router.get("/auth/github", function(res,req,next) {
+  console.log("Started GitHub OAuth");
+  return githubAuth.login(res,req);
+});
+
+router.get("/auth/github/callback", function(res, req, next) {
+  console.log("Got Callback from Github");
+  return githubAuth.callback(res,req);
+})
+
+
 
 // Google Sign In
 router.get("/googlesignintoken", function(req,res,next) {
