@@ -50,6 +50,12 @@
       href="../assets/css/argon.css?v=1.2.0"
       type="text/css"
     />
+     <!-- Custom CSS -->
+     <link
+     rel="stylesheet"
+     href="../assets/css/custom.css"
+     type="text/css"
+   />
   </head>
 
   <body class="bg-default">
@@ -96,30 +102,19 @@
                 <div class="text-muted text-center mt-2 mb-3">
                   <small>Sign in with</small>
                 </div>
-                <div class="btn-wrapper text-center">
-                  <a href="#" class="btn btn-neutral btn-icon">
-                    <span class="btn-inner--icon"
-                      ><img src="../assets/img/icons/common/github.svg"
-                    /></span>
-                    <span class="btn-inner--text">Github</span>
-                  </a>
-                  <a href="#" class="btn btn-neutral btn-icon">
-                    <span class="btn-inner--icon"
-                      ><img src="../assets/img/icons/common/google.svg"
-                    /></span>
-                    <span class="btn-inner--text">Google</span>
-                  </a>
-                  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                  <script>
-                    
-                    function onSignIn(googleUser) {
-                      const profile = googleUser.getBasicProfile();
-                      const id_token = googleUser.getAuthResponse().id_token;
-                      window.location = 'googlesignintoken/?id_token='+id_token;
-                    }
-                    
-                  </script>
-
+                <div class="text-center">
+                 
+                  <div class="login-with-buttons">
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <script>
+                      function onSignIn(googleUser) {
+                        const profile = googleUser.getBasicProfile();
+                        const id_token = googleUser.getAuthResponse().id_token;
+                        window.location = 'googlesignintoken/?id_token='+id_token;
+                      }
+                    </script>
+                  </div>
+                  
                 </div>
               </div>
               <div class="card-body px-lg-5 py-lg-5">
