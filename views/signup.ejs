@@ -104,9 +104,17 @@
                 <div class="text-center">
                  
                   <div class="login-with-buttons">
+                    <a href="/auth/github" class="btn btn-neutral btn-icon">
+                      <span class="btn-inner--icon"
+                        ><img src="../assets/img/icons/common/github.svg"
+                      /></span>
+                      <span class="btn-inner--text">Github</span>
+                    </a>
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    </a>
+                    
                     <script>
-                      function onSignIn(googleUser) {
+                     function onSignIn(googleUser) {
                         const profile = googleUser.getBasicProfile();
                         const id_token = googleUser.getAuthResponse().id_token;
                         window.location = 'googlesignintoken/?id_token='+id_token;

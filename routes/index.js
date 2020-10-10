@@ -50,10 +50,13 @@ router.post("/signup/submit", function (req, res, next) {
 /* SIGN IN FUNCTIONALITY */
 
 // GitHub Sign In
+
+// Listening for an error from GitHub
 githubAuth.on('error', (error) => {
   console.log("ERROR USING GITHUB LOGIN", error);
 });
 
+// Listening for a token from GitHub
 githubAuth.on('token', (token, res) => {
   console.log("GOT TOKEN FROM GITHUB", token);
   firebaseModel.githubSignIn(token.access_token).then(result => {
@@ -65,11 +68,13 @@ githubAuth.on('token', (token, res) => {
   });
 });
 
+// Initiate Github Login
 router.get("/auth/github", function(res,req,next) {
   console.log("Started GitHub OAuth");
   return githubAuth.login(res,req);
 });
 
+// Recieving Callback from Github
 router.get("/auth/github/callback", function(res, req, next) {
   console.log("Got Callback from Github");
   return githubAuth.callback(res,req);
