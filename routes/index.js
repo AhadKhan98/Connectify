@@ -121,4 +121,9 @@ router.get("/logout", function (req, res, next) {
   res.redirect("/");
 });
 
+router.get('/chat', function(req, res, next) {
+  res.render('chat');
+});
+
+
 module.exports = router;

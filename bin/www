@@ -7,6 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('study-matcher:server');
 var http = require('http');
+const socketio = require('socket.io');
+const Filter=require('bad-words')
+const{generateMessage}= require('./utils/messages');
+const {addUser,getUser, removeUser, getUsersInRoom, numberOfUsersInRoom} = require('./utils/users')
 
 /**
  * Get port from environment and store in Express.
@@ -20,7 +24,41 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+const io = socketio(server)
+const count = 0
+io.on('connection',(socket)=>{
+  console.log('Connected')
 
+  
+  socket.on('join',({username,room},callback)=>{
+    const {error,user}=addUser({id:socket.id,username,room})
+    if(error){
+      return callback(error)
+    }
+      socket.join(user.room)
+     const number = numberOfUsersInRoom(user.room)
+    socket.emit('message',generateMessage(`Welcome to Connectify. Currently there are ${number} users online. If you are the only one here, please wait for sometime till users show up. The meet link is :link. Happy Working!`,'Connectify'))
+    socket.broadcast.to(user.room).emit('message',generateMessage(`${username} has joined`,'Connectify'))
+    callback()
+    
+  
+  })
+  socket.on('send',(msg,callback)=>{
+    const filter = new Filter ()
+    const user=getUser(socket.id)
+    if (filter.isProfane(msg)){
+      return callback ('Profanity is not allowed')
+    }
+    io.to(user.room).emit('message',generateMessage(msg,user.username))
+    callback();
+  })
+  socket.on('disconnect',()=>{
+    const user=removeUser(socket.id)
+    if(user){
+      io.to(user.room).emit('message',generateMessage(`${user.username} has left`,'Connectify'))
+    }
+  })
+})
 /**
  * Listen on provided port, on all network interfaces.
  */
