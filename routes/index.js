@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
+const githubAuth = require("../models/githubAuth");
 
 /* FIREBASE AUTH LISTENER */
 let currentUser = firebase.auth().currentUser;
@@ -27,7 +28,7 @@ router.get("/", function (req, res, next) {
 
 // Show Sign Up Page
 router.get("/signUp", function (req, res, next) {
-  res.render("signup");
+  res.render("signup", {errorMessage:""});
 });
 
 // Form Submit (POST METHOD)
@@ -35,25 +36,80 @@ router.post("/signup/submit", function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;
-  firebaseModel.authSignUp(name, email, password).then((user) => {
-    res.redirect("/");
+  firebaseModel.authSignUp(name, email, password).then((result) => {
+    if (typeof result === "string") {
+      let errorMessage = result;
+      res.render("signup", {errorMessage})
+    } else {
+      res.redirect("/");
+    }
+    
   });
 });
 
 /* SIGN IN FUNCTIONALITY */
 
+// GitHub Sign In
+
+// Listening for an error from GitHub
+githubAuth.on('error', (error) => {
+  console.log("ERROR USING GITHUB LOGIN", error);
+});
+
+// Listening for a token from GitHub
+githubAuth.on('token', (token, res) => {
+  console.log("GOT TOKEN FROM GITHUB", token);
+  firebaseModel.githubSignIn(token.access_token).then(result => {
+    if (typeof result === "string") {
+      res.render("login", {errorMessage:"Failed to sign in. Please try again."})
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
+// Initiate Github Login
+router.get("/auth/github", function(res,req,next) {
+  console.log("Started GitHub OAuth");
+  return githubAuth.login(res,req);
+});
+
+// Recieving Callback from Github
+router.get("/auth/github/callback", function(res, req, next) {
+  console.log("Got Callback from Github");
+  return githubAuth.callback(res,req);
+})
+
+
+
+// Google Sign In
+router.get("/googlesignintoken", function(req,res,next) {
+  console.log("GOT GOOGLE SIGN IN TOKEN");
+  const google_id_token = req.query.id_token
+  console.log(google_id_token)  
+  firebaseModel.googleSignIn(google_id_token).then(result => {
+    if (typeof result === "string") {
+      res.render("login", {errorMessage:"Failed to sign in. Please try again."})
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
 // Show Login Page
 router.get("/login", function (req, res, next) {
-  res.render("login");
+  res.render("login", {errorMessage:""});
 });
 
 // Form Submit (POST METHOD)
 router.post("/login/submit", function (req, res, next) {
   const email = req.body.email;
   const password = req.body.password;
-  firebaseModel.authSignIn(email, password);
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
+  firebaseModel.authSignIn(email, password).then(result => {
+    if (typeof result === "string") {
+      errorMessage = "Failed to log in. Please re-check your email and password.";
+      res.render("login", {errorMessage})
+    } else {
       res.redirect("/");
     }
   });

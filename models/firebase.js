@@ -24,18 +24,19 @@ const authSignUp = (name, email, password) => {
     })
     .catch(function (error) {
       // Handle Errors here.
-      console.log("USER SIGNUP FAIL");
-      console.log("ERROR: ", error);
+      return error.message;
     });
 };
 
 const authSignIn = (email, password) => {
-  firebase
+  return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((result) => result)
+    .then((result) => {
+      return result
+    })
     .catch((error) => {
-      console.log("LOG IN FAIL", error);
+      return error.message;
     });
 };
 
@@ -51,9 +52,42 @@ const authLogOut = () => {
     });
 };
 
+const googleSignIn = (google_id_token) => {
+  var credential = firebase.auth.GoogleAuthProvider.credential(google_id_token);
+  
+  return firebase.auth().signInWithCredential(credential)
+  .then((user)=>{
+    console.log('NEW GFIREBASE USER', user);
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    console.log("GOOGLE USER TO FIREBASE ERROR",errorCode,errorMessage,email,credential)
+    // ...
+  });
+};
+
+const githubSignIn = (access_token) => {
+  const credential = firebase.auth.GithubAuthProvider.credential(access_token);
+  return firebase.auth().signInWithCredential(credential)
+  .then((user) => {
+    console.log('NEW GITHUB USER', user);
+  })
+  .catch((error) => {
+    console.log("GITHUB USER TO FIREBASE ERROR", error.code, error.message, error.email, error.credential);
+  })
+};
+
 module.exports = {
   database,
   authSignUp,
   authSignIn,
   authLogOut,
+  googleSignIn,
+  githubSignIn,
 };
