@@ -12,6 +12,7 @@ const addNewUserToDatabase = ({db, result}) => {
           displayName: result.displayName,
           email: result.email,
           completedProfile: false,
+          points: 0,
       };
       db.collection("users").doc(result.email).set({data});
       }
