@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
+const firestore = require("../models/firestore");
 const githubAuth = require("../models/githubAuth");
 
 /* FIREBASE AUTH LISTENER */
@@ -9,15 +10,12 @@ let currentUser = firebase.auth().currentUser;
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     currentUser = user;
-    console.log("OTHER ATTRIBUTES ", currentUser);
-    console.log("WE HAVE A USER", currentUser.displayName);
   } else {
     currentUser = null;
     console.log("NO USER");
   }
 });
 
-/* HANDLER FUNCTIONS */
 
 /* HOME PAGE */
 router.get("/", function (req, res, next) {
@@ -121,9 +119,9 @@ router.get("/logout", function (req, res, next) {
   res.redirect("/");
 });
 
-router.get('/chat', function(req, res, next) {
-  res.render('chat');
-});
+// router.get('/chat', function(req, res, next) {
+//   res.render('chat');
+// });
 
 
 module.exports = router;

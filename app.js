@@ -38,4 +38,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+process.on('SIGINT', function() {
+  console.log("\nFULL SHUTDOWN OF SERVER");
+  process.exit(1);
+});
+
 module.exports = app;
