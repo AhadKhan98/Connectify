@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
-const firestore = require("../models/firestore");
 const githubAuth = require("../models/githubAuth");
 
 /* FIREBASE AUTH LISTENER */

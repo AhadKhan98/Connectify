@@ -1,14 +1,14 @@
-const {database} = require("../models/firebase");
-
+const firebaseModel = require("../models/firebase");
 
 // ADD NEW USER WITH DEFAULT PARAMS
-const addNewUserToDatabase = ({user}) => {
+const addNewUserToDatabase = ({db, result}) => {
+    console.log("BEFORE INSERTING", );
     data = {
-        displayName: user.displayName,
-        email: user.email,
+        displayName: result.displayName,
+        email: result.email,
         completedProfile: false,
     };
-    console.log("ADDING NEW USER TO DB", user.displayName);
+    db.collection("users").doc(result.email).set({data});
   };
 
 module.exports = {addNewUserToDatabase};
