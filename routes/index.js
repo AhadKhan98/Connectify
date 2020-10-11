@@ -142,6 +142,7 @@ router.get("/complete-profile", function (req,res,next) {
 });
 
 router.post("/complete-profile/submit", function(req,res,next) {
+  console.log(req.body);
   res.redirect('/')
 })
 
