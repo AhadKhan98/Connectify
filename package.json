@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bad-words": "^3.0.3",
     "cookie-parser": "~1.4.4",
     "custom-env": "^2.0.1",
     "debug": "~2.6.9",
@@ -15,6 +16,7 @@
     "firebase": "^7.22.1",
     "http-errors": "^1.6.3",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "socket.io": "^2.3.0"
   }
 }
