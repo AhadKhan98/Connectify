@@ -3,6 +3,7 @@ var router = express.Router();
 const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
 const githubAuth = require("../models/githubAuth");
+const firestore = require("../models/firestore");
 
 /* FIREBASE AUTH LISTENER */
 let currentUser = firebase.auth().currentUser;
@@ -118,9 +119,36 @@ router.get("/logout", function (req, res, next) {
   res.redirect("/");
 });
 
-// router.get('/chat', function(req, res, next) {
-//   res.render('chat');
-// });
+/* COMPLETE USER PROFILE FUNCTIONALITY */
+
+// Check if user has completed their profile and redirect them to appropriate page
+router.get("/checkUserProfile", function (req, res, next) {
+  if (currentUser) {
+    firestore.checkUserProfile({db:firebaseModel.db, user:currentUser}).then((completedProfile) => {
+      if (completedProfile) {
+        console.log("USER HAS COMPLETED THEIR PROFILE");
+        res.redirect('/');
+      } else {
+        res.redirect('/complete-profile');
+      }
+    });  
+  } else {
+    res.redirect('/');
+  };
+});
+
+router.get("/complete-profile", function (req,res,next) {
+  res.render("complete-profile", {displayName:currentUser.displayName})
+});
+
+router.post("/complete-profile/submit", function(req,res,next) {
+  res.redirect('/')
+})
+
+/* STUDY ROOM FUNCTIONALITY */
+router.get('/chat', function(req, res, next) {
+  res.render('chat');
+});
 
 
 module.exports = router;

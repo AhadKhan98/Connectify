@@ -90,6 +90,7 @@ const githubSignIn = (access_token) => {
 };
 
 module.exports = {
+  db,
   authSignUp,
   authSignIn,
   authLogOut,

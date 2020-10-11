@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete profile</title>
+</head>
+<body>
+    <h1>Hi <%= displayName %>, Please complete your profile</h1>
+    <form method="POST" action="/complete-profile/submit">
+        <input required id="college" name="college" placeholder="What college do you go to?" type="text"></input>
+        <br>
+        <input id="subjects-input" name="subjects-input" placeholder="Enter your subjects" type="text"></input><button type="button" onclick="addSubject()">Add</button>
+        <br>
+        <ul id="subjects-list">
+            
+        </ul>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const addSubject = () => {
+            console.log("ADD SUBJECT")
+            const subjectList = document.getElementById("subjects-list");
+            const subject = document.getElementById("subjects-input").value;
+            subjectList.innerHTML += ("<li>" + subject + "</li>");
+        }
+        
+    </script>
+</body>
+</html>

@@ -17,8 +17,20 @@ const addNewUserToDatabase = ({db, result}) => {
       db.collection("users").doc(result.email).set({data});
       }
     });
-
-    
   };
 
-module.exports = {addNewUserToDatabase};
+// CHECK IF USER HAS COMPLETED PROFILE
+const checkUserProfile = ({db, user}) => {
+  let completedProfile = db.collection("users").doc(user.email).get().then(snapshot => {
+    console.log(snapshot.data());
+    data = snapshot.data();
+    if (data.completedProfile) {
+      return true
+    } else {
+      return false
+    }
+  });
+  return completedProfile;
+}
+
+module.exports = {addNewUserToDatabase,checkUserProfile};
