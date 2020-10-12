@@ -1,4 +1,5 @@
 const firebase = require("firebase");
+const { addNewUserToDatabase } = require("../models/firestore");
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -12,7 +13,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+
+// Initialize Firestore
+const db = firebase.firestore();
+
 
 // Firebase Auth Sign Up Handler
 const authSignUp = (name, email, password) => {
@@ -20,7 +24,9 @@ const authSignUp = (name, email, password) => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((result) => {
-      return result.user.updateProfile({ displayName: name });
+      return result.user.updateProfile({ displayName: name }).then(() => {
+        addNewUserToDatabase({result:result.user, db});
+      }).catch(error => error);
     })
     .catch(function (error) {
       // Handle Errors here.
@@ -57,7 +63,7 @@ const googleSignIn = (google_id_token) => {
   
   return firebase.auth().signInWithCredential(credential)
   .then((user)=>{
-    console.log('NEW GFIREBASE USER', user);
+    addNewUserToDatabase({result:user.user, db});
   })
   .catch(function(error) {
     // Handle Errors here.
@@ -76,7 +82,7 @@ const githubSignIn = (access_token) => {
   const credential = firebase.auth.GithubAuthProvider.credential(access_token);
   return firebase.auth().signInWithCredential(credential)
   .then((user) => {
-    console.log('NEW GITHUB USER', user);
+    addNewUserToDatabase({result:user.user, db});
   })
   .catch((error) => {
     console.log("GITHUB USER TO FIREBASE ERROR", error.code, error.message, error.email, error.credential);
@@ -84,7 +90,7 @@ const githubSignIn = (access_token) => {
 };
 
 module.exports = {
-  database,
+  db,
   authSignUp,
   authSignIn,
   authLogOut,

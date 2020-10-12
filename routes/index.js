@@ -3,21 +3,22 @@ var router = express.Router();
 const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
 const githubAuth = require("../models/githubAuth");
+const firestore = require("../models/firestore");
+const usersRoute = require("../routes/users");
+
+router.use('/users', usersRoute);
 
 /* FIREBASE AUTH LISTENER */
 let currentUser = firebase.auth().currentUser;
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     currentUser = user;
-    console.log("OTHER ATTRIBUTES ", currentUser);
-    console.log("WE HAVE A USER", currentUser.displayName);
   } else {
     currentUser = null;
     console.log("NO USER");
   }
 });
 
-/* HANDLER FUNCTIONS */
 
 /* HOME PAGE */
 router.get("/", function (req, res, next) {
@@ -41,7 +42,7 @@ router.post("/signup/submit", function (req, res, next) {
       let errorMessage = result;
       res.render("signup", {errorMessage})
     } else {
-      res.redirect("/");
+      res.redirect("/checkUserProfile");
     }
     
   });
@@ -63,7 +64,7 @@ githubAuth.on('token', (token, res) => {
     if (typeof result === "string") {
       res.render("login", {errorMessage:"Failed to sign in. Please try again."})
     } else {
-      res.redirect('/');
+      res.redirect('/checkUserProfile');
     }
   });
 });
@@ -91,7 +92,7 @@ router.get("/googlesignintoken", function(req,res,next) {
     if (typeof result === "string") {
       res.render("login", {errorMessage:"Failed to sign in. Please try again."})
     } else {
-      res.redirect('/');
+      res.redirect('/checkUserProfile');
     }
   });
 });
@@ -110,7 +111,7 @@ router.post("/login/submit", function (req, res, next) {
       errorMessage = "Failed to log in. Please re-check your email and password.";
       res.render("login", {errorMessage})
     } else {
-      res.redirect("/");
+      res.redirect("/checkUserProfile");
     }
   });
 });
@@ -121,8 +122,40 @@ router.get("/logout", function (req, res, next) {
   res.redirect("/");
 });
 
+/* COMPLETE USER PROFILE FUNCTIONALITY */
+
+// Check if user has completed their profile and redirect them to appropriate page
+router.get("/checkUserProfile", function (req, res, next) {
+  if (currentUser) {
+    firestore.checkUserProfile({db:firebaseModel.db, user:currentUser}).then((completedProfile) => {
+      console.log('COMPLETEDPROFILE', completedProfile)
+      if (completedProfile) {
+        console.log("USER HAS COMPLETED THEIR PROFILE");
+        res.redirect('/users');
+      } else {
+        res.redirect('/complete-profile');
+      }
+    });  
+  } else {
+    res.redirect('/');
+  };
+});
+
+router.get("/complete-profile", function (req,res,next) {
+  res.render("complete-profile", {displayName:currentUser.displayName})
+});
+
+router.post("/complete-profile/submit", function(req,res,next) {
+  // Add the data sent back to the firestore
+  const college = req.body.college;
+  const subjectsArray = req.body["subjects-array"];
+  firestore.completeUserProfile({db:firebaseModel.db, user:currentUser, college:college, subjects:subjectsArray});
+  res.render('/checkUserProfile');
+})
+
+/* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
-  res.render('chat');
+  res.render('chat', {username:currentUser.displayName});
 });
 
 
