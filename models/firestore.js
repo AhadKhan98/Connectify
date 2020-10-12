@@ -44,4 +44,16 @@ const completeUserProfile = ({db, user, college, subjects}) => {
   db.collection("users").doc(user.email).update({completedProfile:true});
 }
 
-module.exports = {addNewUserToDatabase,checkUserProfile,completeUserProfile};
+
+// GET USER'S COLLEGE
+const getUserCollegeAndSubjects = ({db, user}) => {
+  return db.collection("users").doc(user.email).get()
+  .then(snapshot => {
+    return {college:snapshot.data().college, subjects:snapshot.data().subjects};
+  })
+  .catch(error => {
+    return error
+  })
+}
+
+module.exports = {addNewUserToDatabase,checkUserProfile,completeUserProfile,getUserCollegeAndSubjects};

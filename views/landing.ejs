@@ -168,11 +168,20 @@
           <div class="row">
     <div class="form-group col-md-6">
         <label for="example-text-input" class="form-control-label">Preferred College</label>
-        <input class="form-control" type="text" placeholder="Enter college here..(No short forms, capitalise the first letters)" name="college" id="college" required />
+        <select name="college" id="college" class="form-control selectpicker">
+          <option>Match me with any college</option>
+          <option><%= userData.college %></option>
+        </select>
     </div>
     <div class="form-group col-md-6">
       <label for="example-text-input" class="form-control-label">Preferred Subject</label>
-      <input class="form-control" type="text" placeholder="Enter subject here..(No short forms, capitalise the first letters)" name="subject" id="subject" required />
+      <select name="subject" id="subject" class="form-control selectpicker">
+        <% userData.subjects.map(subject => { %>
+        <option><%= subject %></option>
+        <% }) %>
+        <!-- <option><%= userData.college %></option> -->
+      </select>
+      <!-- <input class="form-control" type="text" placeholder="Enter subject here..(No short forms, capitalise the first letters)" name="subject" id="subject" required /> -->
   </div>
 </div>
 <div class="row">
