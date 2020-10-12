@@ -150,7 +150,7 @@ router.post("/complete-profile/submit", function(req,res,next) {
   const college = req.body.college;
   const subjectsArray = req.body["subjects-array"];
   firestore.completeUserProfile({db:firebaseModel.db, user:currentUser, college:college, subjects:subjectsArray});
-  res.render('/checkUserProfile');
+  res.redirect('/users/');
 })
 
 /* STUDY ROOM FUNCTIONALITY */
