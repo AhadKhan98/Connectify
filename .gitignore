@@ -108,4 +108,4 @@ dist
 .env
 
 #DS Store
- public/assets/img/brand/.DS_Store
+.DS_Store
