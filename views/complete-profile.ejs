@@ -10,20 +10,34 @@
     <form method="POST" action="/complete-profile/submit">
         <input required id="college" name="college" placeholder="What college do you go to?" type="text"></input>
         <br>
-        <input id="subjects-input" name="subjects-input" placeholder="Enter your subjects" type="text"></input><button type="button" onclick="addSubject()">Add</button>
+        <input id="subjects-input" placeholder="Enter your subjects" type="text"></input><button type="button" onclick="addSubject()">Add</button>
         <br>
         <ul id="subjects-list">
             
         </ul>
-        <button type="submit">Submit</button>
+        <p id="error" style="color:red;"></p>
+        <input type="hidden" id="subjects-array" name="subjects-array"></input>
+        <button id="submit-button" type="submit" disabled>Submit</button>
     </form>
 
     <script>
         const addSubject = () => {
             console.log("ADD SUBJECT")
+            const submitButton = document.getElementById("submit-button");
             const subjectList = document.getElementById("subjects-list");
             const subject = document.getElementById("subjects-input").value;
-            subjectList.innerHTML += ("<li value=" + subject + " >" + subject + "</li>");
+            const subjectsNodeList = document.getElementsByTagName("li");
+            const subjectsArray = document.getElementById("subjects-array");
+            if (subject) {
+                submitButton.disabled = false;
+                document.getElementById("error").textContent = "";
+                subjectList.innerHTML += ("<li>" + subject + "</li>");
+                subjectsArray.value += subject + '|'
+            } else {
+                document.getElementById("error").textContent = "Subject cannot be blank.";
+            };
+            
+
         }
         
     </script>

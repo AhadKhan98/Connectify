@@ -14,7 +14,7 @@ const addNewUserToDatabase = ({db, result}) => {
           completedProfile: false,
           points: 0,
       };
-      db.collection("users").doc(result.email).set({data});
+      db.collection("users").doc(result.email).set({...data});
       }
     });
   };
@@ -23,14 +23,25 @@ const addNewUserToDatabase = ({db, result}) => {
 const checkUserProfile = ({db, user}) => {
   let completedProfile = db.collection("users").doc(user.email).get().then(snapshot => {
     console.log(snapshot.data());
-    data = snapshot.data();
-    if (data.completedProfile) {
-      return true
-    } else {
-      return false
-    }
-  });
+    snapshotData = snapshot.data();
+    return snapshotData.completedProfile;
+  })
+  .catch(error => error);
   return completedProfile;
+};
+
+// ADD SUBJECTS AND COLLEGE TO USER PROFILE
+const completeUserProfile = ({db, user, college, subjects}) => {
+  let subjectsArray = subjects.split('|');
+  subjectsArray.pop();
+  console.log("SUBJECTS ARRAY ⌛", subjectsArray);
+  db.collection("users").doc(user.email).set({
+    subjects:subjectsArray,
+    college: college,
+  }, {merge:true}).then(() => {
+    console.log("COMPLETED USER IN FIREBASE 🔥");
+  });
+  db.collection("users").doc(user.email).update({completedProfile:true});
 }
 
-module.exports = {addNewUserToDatabase,checkUserProfile};
+module.exports = {addNewUserToDatabase,checkUserProfile,completeUserProfile};

@@ -39,7 +39,7 @@ router.post("/signup/submit", function (req, res, next) {
       let errorMessage = result;
       res.render("signup", {errorMessage})
     } else {
-      res.redirect("/");
+      res.redirect("/checkUserProfile");
     }
     
   });
@@ -61,7 +61,7 @@ githubAuth.on('token', (token, res) => {
     if (typeof result === "string") {
       res.render("login", {errorMessage:"Failed to sign in. Please try again."})
     } else {
-      res.redirect('/');
+      res.redirect('/checkUserProfile');
     }
   });
 });
@@ -89,7 +89,7 @@ router.get("/googlesignintoken", function(req,res,next) {
     if (typeof result === "string") {
       res.render("login", {errorMessage:"Failed to sign in. Please try again."})
     } else {
-      res.redirect('/');
+      res.redirect('/checkUserProfile');
     }
   });
 });
@@ -108,7 +108,7 @@ router.post("/login/submit", function (req, res, next) {
       errorMessage = "Failed to log in. Please re-check your email and password.";
       res.render("login", {errorMessage})
     } else {
-      res.redirect("/");
+      res.redirect("/checkUserProfile");
     }
   });
 });
@@ -125,9 +125,10 @@ router.get("/logout", function (req, res, next) {
 router.get("/checkUserProfile", function (req, res, next) {
   if (currentUser) {
     firestore.checkUserProfile({db:firebaseModel.db, user:currentUser}).then((completedProfile) => {
+      console.log('COMPLETEDPROFILE', completedProfile)
       if (completedProfile) {
         console.log("USER HAS COMPLETED THEIR PROFILE");
-        res.redirect('/');
+        res.redirect('/chat');
       } else {
         res.redirect('/complete-profile');
       }
@@ -142,8 +143,11 @@ router.get("/complete-profile", function (req,res,next) {
 });
 
 router.post("/complete-profile/submit", function(req,res,next) {
-  console.log(req.body);
-  res.redirect('/')
+  // Add the data sent back to the firestore
+  const college = req.body.college;
+  const subjectsArray = req.body["subjects-array"];
+  firestore.completeUserProfile({db:firebaseModel.db, user:currentUser, college:college, subjects:subjectsArray});
+  res.redirect('/checkUserProfile')
 })
 
 /* STUDY ROOM FUNCTIONALITY */

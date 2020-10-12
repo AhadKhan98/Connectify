@@ -26,7 +26,7 @@ const authSignUp = (name, email, password) => {
     .then((result) => {
       return result.user.updateProfile({ displayName: name }).then(() => {
         addNewUserToDatabase({result:result.user, db});
-      });
+      }).catch(error => error);
     })
     .catch(function (error) {
       // Handle Errors here.
