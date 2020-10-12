@@ -118,7 +118,7 @@
                  
                   <div class="media-body  ml-2  d-none d-lg-block">
                     <i class="ni ni-circle-08" style="font-size: medium;"></i>
-                    <span class="mb-0 text-sm  font-weight-bold">Enter Username</span>
+                    <span class="mb-0 text-sm  font-weight-bold"><%= username %></span>
                   </div>
                 </div>
               </a>
@@ -204,7 +204,7 @@
   </div>
   <div class="form-group col-md-12">
     <center>
-      <input class="form-control" type="hidden"  name="username" id="username"  value = "username" required />
+      <input class="form-control" type="hidden"  name="username" id="username"  value = "<%= username %>" required />
     <button class="btn btn-icon btn-primary" type="submit">
       <span class="btn-inner--icon"><i class="ni ni-atom"></i>&nbsp Get me In</span>
     </button>

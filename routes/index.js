@@ -4,6 +4,9 @@ const firebaseModel = require("../models/firebase");
 const firebase = require("firebase");
 const githubAuth = require("../models/githubAuth");
 const firestore = require("../models/firestore");
+const usersRoute = require("../routes/users");
+
+router.use('/users', usersRoute);
 
 /* FIREBASE AUTH LISTENER */
 let currentUser = firebase.auth().currentUser;
@@ -128,7 +131,7 @@ router.get("/checkUserProfile", function (req, res, next) {
       console.log('COMPLETEDPROFILE', completedProfile)
       if (completedProfile) {
         console.log("USER HAS COMPLETED THEIR PROFILE");
-        res.redirect('/chat');
+        res.redirect('/users');
       } else {
         res.redirect('/complete-profile');
       }
@@ -147,12 +150,12 @@ router.post("/complete-profile/submit", function(req,res,next) {
   const college = req.body.college;
   const subjectsArray = req.body["subjects-array"];
   firestore.completeUserProfile({db:firebaseModel.db, user:currentUser, college:college, subjects:subjectsArray});
-  res.redirect('/checkUserProfile')
+  res.render('/checkUserProfile');
 })
 
 /* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
-  res.render('chat');
+  res.render('chat', {username:currentUser.displayName});
 });
 
 
