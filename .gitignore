@@ -106,3 +106,6 @@ dist
 
 #Environment variables
 .env
+
+#DS Store
+ public/assets/img/brand/.DS_Store
