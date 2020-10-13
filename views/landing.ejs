@@ -32,10 +32,11 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="/assets/css/argon.css?v=1.2.0" type="text/css">
+  <link rel="stylesheet" href="assets/css/custom.css">
   <style>
     html{
   
-  overflow: hidden;
+  overflow-x: hidden;
     }
   </style>
 </head>
@@ -61,15 +62,20 @@
                 <span class="nav-link-text">Connect</span>
               </a>
             </li>
-          
             <li class="nav-item">
-              <a class="nav-link" href="/users/profile/id">
+              <a class="nav-link" href="/users/upload">
+                <i class="ni ni-spaceship text-pink"></i>
+                <span class="nav-link-text">Upload</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/profilefw">
                 <i class="ni ni-single-02 text-yellow"></i>
                 <span class="nav-link-text">Profile</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="users/settings/id">
+              <a class="nav-link" href="users/settings">
                 <i class="ni ni-settings text-default"></i>
                 <span class="nav-link-text">Settings</span>
               </a>
@@ -117,7 +123,11 @@
                 <div class="media align-items-center">
                  
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <i class="ni ni-circle-08" style="font-size: medium;"></i>
+                    <div class="user-points">
+                      <i style="color:yellow;" class="fas fa-coins points-icon"><p><%= userPoints %> Points</p></i>
+                      
+                    </div>
+                    
                     <span class="mb-0 text-sm  font-weight-bold"><%= username %></span>
                   </div>
                 </div>
@@ -215,7 +225,7 @@
   <div class="form-group col-md-12">
     <center>
       <input class="form-control" type="hidden"  name="username" id="username"  value = "<%= username %>" required />
-    <button class="btn btn-icon btn-primary" type="submit">
+      <button class="btn btn-icon btn-primary" type="submit">
       <span class="btn-inner--icon"><i class="ni ni-atom"></i>&nbsp Get me In</span>
     </button>
   </center>

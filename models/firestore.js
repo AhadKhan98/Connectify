@@ -56,15 +56,16 @@ const getUserCollegeAndSubjects = ({db, user}) => {
   .catch(error => {
     return error
   })
-}
+};
+
 
 // ADD USER POST
 const addPostToDatabase = ({db, email, postContent, postType, timestamp}) => {
   // Check if user already exists in firestore
   db.collection("users").doc(email).get().then((document) => {
-   
-      post = document.posts
-      post=post.push({timestamp: timestamp, content: postContent, type: postType})
+    console.log(document.data())
+      post = document.data().posts
+      post.push({timestamp: timestamp, content: postContent, type: postType})
       console.log(post)
     db.collection("users").doc(email).update({posts: post});
     }).catch(error => {
@@ -73,4 +74,52 @@ const addPostToDatabase = ({db, email, postContent, postType, timestamp}) => {
 
 };
 
-module.exports = {addNewUserToDatabase,checkUserProfile,completeUserProfile,getUserCollegeAndSubjects, addPostToDatabase};
+// GET USER'S POINTS
+const getUserPoints = ({db, user}) => {
+  return db.collection("users").doc(user.email).get()
+  .then(snapshot => {
+    return {points:snapshot.data().points};
+  })
+  .catch(error => {
+    return error
+  })
+};
+
+// ADD POINTS TO USER
+const addUserPoints = ({db, user, points}) => {
+  let currentUserPoints = 0;
+  getUserPoints({db, user}).then(result => {
+    currentUserPoints = result.points;
+    newUserPoints = currentUserPoints += points;
+    db.collection("users").doc(user.email).update({points:newUserPoints});
+  });
+};
+
+
+// UPDATE USER PROFILE WITH NEW DATA
+const updateUserProfile = ({db, user, newData}) => {
+  db.collection("users").doc(user.email).update({
+    displayName: newData.name,
+    college: newData.college,
+    subjects: newData.subjects,
+  }).then(result => {
+    console.log("NEWDATASUBJS", newData.subjects);
+    if (newData.password) {
+      user.updatePassword(newData.password).then(result => {
+        console.log("PASSWORD CHANGE SUCCESSFUL");
+      })
+    }
+    console.log("UPDATED DATA SUCCESSFULY");
+  });
+};
+
+module.exports = {
+  addNewUserToDatabase,
+  checkUserProfile,
+  completeUserProfile,
+  getUserCollegeAndSubjects,
+  getUserPoints,
+  addUserPoints,
+  updateUserProfile,
+  addPostToDatabase
+};

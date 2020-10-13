@@ -35,7 +35,7 @@
   <style>
     html{
   
-  overflow: hidden;
+  overflow-x: hidden;
     }
   </style>
 </head>
@@ -56,12 +56,17 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="/users">
+              <a class="nav-link " href="/users">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Connect</span>
               </a>
             </li>
-          
+            <li class="nav-item">
+              <a class="nav-link active" href="/users/upload">
+                <i class="ni ni-spaceship text-pink"></i>
+                <span class="nav-link-text">Upload</span>
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="/users/profile/id">
                 <i class="ni ni-single-02 text-yellow"></i>
@@ -69,7 +74,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="users/settings/id">
+              <a class="nav-link " href="/users/settings">
                 <i class="ni ni-settings text-default"></i>
                 <span class="nav-link-text">Settings</span>
               </a>
@@ -156,13 +161,13 @@
       <div class="container-fluid">
         <br>
         <br>
-        <h1>Connectify's Study Room</h1>
+        <h3 style="font-family: Georgia, 'Times New Roman', Times, serif; "><i>"When no one is around to say anything about an incomplete task, it’s easy to push it to the next day and the next week"</i></h3>
         <p>
-        - Don’t talk during pomodoros (work periods). <br>
-        - Do talk during breaks. <br>
-        - Talking about work is encouraged. <br>
-        - Bragging about work is discouraged. <br>
-        - Turn your camera/mic on if you want. <br>
+          1. Share a Sense of Wonder <br>
+          2. Be Grateful for Your Success <br>
+          3. Don’t Avoid the Achievement <br>
+          4. Be Personal <br>
+          5. Don’t Share All of Your Achievements <br>
       </p>
         <form action="/users/upload" method="POST">
           <div class="row">
@@ -188,7 +193,7 @@
     <center>
       <input class="form-control" type="hidden"  name="username" id="username"  value = "<%= username %>" required />
     <button class="btn btn-icon btn-primary" type="submit">
-      <span class="btn-inner--icon"><i class="ni ni-star"></i>&nbsp Submit</span>
+      <span class="btn-inner--icon"><i class="ni ni-favourite-28"></i>&nbsp Submit</span>
     </button>
   </center>
 </div>
@@ -198,14 +203,12 @@
     <!-- Page content -->
    
     </div>
-   <br>
-   <br>
+    <br>
+    <br> 
     <br>
     <br>
     <br>
-   
-    <br>
-    <br> <br>
+
     <br>
       <!-- Footer -->
       <footer class="footer pt-0">
