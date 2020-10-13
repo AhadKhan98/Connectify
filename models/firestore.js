@@ -76,7 +76,25 @@ const addUserPoints = ({db, user, points}) => {
     newUserPoints = currentUserPoints += points;
     db.collection("users").doc(user.email).update({points:newUserPoints});
   });
-}
+};
+
+
+// UPDATE USER PROFILE WITH NEW DATA
+const updateUserProfile = ({db, user, newData}) => {
+  db.collection("users").doc(user.email).update({
+    displayName: newData.name,
+    college: newData.college,
+    subjects: newData.subjects,
+  }).then(result => {
+    console.log("NEWDATASUBJS", newData.subjects);
+    if (newData.password) {
+      user.updatePassword(newData.password).then(result => {
+        console.log("PASSWORD CHANGE SUCCESSFUL");
+      })
+    }
+    console.log("UPDATED DATA SUCCESSFULY");
+  });
+};
 
 module.exports = {
   addNewUserToDatabase,
@@ -85,4 +103,5 @@ module.exports = {
   getUserCollegeAndSubjects,
   getUserPoints,
   addUserPoints,
+  updateUserProfile,
 };

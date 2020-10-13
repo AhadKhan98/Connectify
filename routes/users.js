@@ -52,8 +52,22 @@ router.get('/settings', function(req, res, next) {
   } else {
     res.redirect('/');
   }
-  
-  
+});
+
+router.post('/update/submit', function(req,res,next) {
+  console.log(req.body);
+  subjectsArray = req.body["subjects-array"].split('|');
+  subjectsArray.pop();
+  const updatedUserData = {
+    name: req.body.name,
+    college: req.body.college,
+    subjects: subjectsArray,
+    password: req.body.password,
+  };
+  firestore.updateUserProfile({db:firebaseModel.db, user:currentUser, newData:updatedUserData})
+
+
+  res.redirect('/users');
 })
 
 module.exports = router;

@@ -69,11 +69,11 @@
                         <div class="card-header bg-transparent pb-5">
 
                             <div class="card-body px-lg-5 py-lg-5">
-                                <form method="POST" action="/complete-profile/submit">
+                                <form method="POST" action="update/submit">
 
                                     <div class="form-group mb-3">
                                         <div class="input-group input-group-merge input-group-alternative">
-                                            <input class="form-control" name="name" value="<%= userData.username %>" type="text"
+                                            <input required class="form-control" name="name" value="<%= userData.username %>" type="text"
                                                 id="name" />
                                     
                                         </div>
@@ -81,7 +81,7 @@
 
                                     <div class="form-group mb-3">
                                         <div class="input-group input-group-merge input-group-alternative">
-                                            <input class="form-control" name="college" value="<%= userData.college %>"
+                                            <input required class="form-control" name="college" value="<%= userData.college %>"
                                                 placeholder="What college do you go to?" type="text" id="college" />
                                                 
                                         </div>
