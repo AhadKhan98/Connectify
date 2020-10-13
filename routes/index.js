@@ -155,8 +155,13 @@ router.post("/complete-profile/submit", function(req,res,next) {
 
 /* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
-  res.render('chat', {username:currentUser.displayName});
+  firestore.getUserPoints({db:firebaseModel.db, user:currentUser}).then(result => {
+    res.render('chat', {username:currentUser.displayName, userPoints:result.points});
+  })
+  
 });
+
+
 
 
 module.exports = router;
