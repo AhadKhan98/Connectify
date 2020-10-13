@@ -164,59 +164,31 @@
         - Bragging about work is discouraged. <br>
         - Turn your camera/mic on if you want. <br>
       </p>
-        <form action="/chat" >
+        <form action="/users/upload" method="POST">
           <div class="row">
-    <div class="form-group col-md-6">
-        <label for="example-text-input" class="form-control-label">Preferred College</label>
-        <select name="college" id="college" class="form-control selectpicker">
-          <option>Match me with any college</option>
-          <option><%= userData.college %></option>
+    <div class="form-group col-md-12">
+        <label for="example-text-input" class="form-control-label">Content Type</label>
+        <select name="type" id="type" class="form-control selectpicker" required>
+          <option>Milestone</option>
+          <option>Thought</option>
+          <option>Motivation</option>
+          <option>Experience</option>
+          <option>Other</option>
         </select>
     </div>
-    <div class="form-group col-md-6">
-      <label for="example-text-input" class="form-control-label">Preferred Subject</label>
-      <select name="subject" id="subject" class="form-control selectpicker">
-        <option>Match me with any subject</option>
-        <% userData.subjects.map(subject => { %>
-        <option><%= subject %></option>
-        <% }) %>
-        <!-- <option><%= userData.college %></option> -->
-      </select>
+    <div class="form-group col-md-12">
+      <label for="example-text-input" class="form-control-label" rows="5">Post Content</label>
+      <textarea name="content" id="content" class="form-control">
+    
+      </textarea>
       <!-- <input class="form-control" type="text" placeholder="Enter subject here..(No short forms, capitalise the first letters)" name="subject" id="subject" required /> -->
   </div>
 </div>
-<div class="row">
-    <div class="form-group col-md-6">
-        <label for="example-search-input" class="form-control-label">Would you prefer your mic to be on or off?</label>
-        <br>
-        <br>
-        
-        <label class="custom-toggle">
-          <input type="checkbox" name="mic" checked>
-          <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
-      </label>
-      <br>
-        <br>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="example-search-input" class="form-control-label">Would you prefer your video to be on or off?</label>
-      <br>
-      <br>
-      
-      <label class="custom-toggle">
-        <input type="checkbox" checked name="video">
-        <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
-    </label>
-    <br>
-      <br>
-  </div>
-   
-  </div>
   <div class="form-group col-md-12">
     <center>
       <input class="form-control" type="hidden"  name="username" id="username"  value = "<%= username %>" required />
     <button class="btn btn-icon btn-primary" type="submit">
-      <span class="btn-inner--icon"><i class="ni ni-atom"></i>&nbsp Get me In</span>
+      <span class="btn-inner--icon"><i class="ni ni-star"></i>&nbsp Submit</span>
     </button>
   </center>
 </div>
@@ -224,16 +196,7 @@
       </div>
   
     <!-- Page content -->
-    <div class="container-fluid mt--6">
-      <div class="row">
-       
-        </div>
-       
-      </div>
-      <div class="row">
-       
-        
-      </div>
+   
     </div>
    <br>
    <br>

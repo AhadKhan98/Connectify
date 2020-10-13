@@ -29,4 +29,32 @@ router.get('/', function(req, res, next) {
   
 });
 
+/* Upload Post. */
+router.get('/upload', function(req, res, next) {
+  if (currentUser) {
+ 
+      res.render('upload.ejs', {username:currentUser.displayName, email:currentUser.email});
+  
+  } else {
+    res.render("upload", {user:currentUser});
+  }
+  
+});
+
+router.post('/upload', function(req, res, next) {
+  if (currentUser) {
+    console.log("HERE")
+    const content = req.body.content
+  const timestamp = Date.now()
+  const type =req.body.type
+  
+ console.log(currentUser.email,content,timestamp,type)
+  firestore.addPostToDatabase({db:firebaseModel.db, email:currentUser.email, postContent: content, postType: type, timestamp});
+  res.redirect("/users")
+  } else {
+    res.render("index", {user:currentUser});
+  }
+  
+});
+
 module.exports = router;

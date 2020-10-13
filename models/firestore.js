@@ -1,5 +1,6 @@
 const firebaseModel = require("../models/firebase");
 
+
 // ADD NEW USER WITH DEFAULT PARAMS
 const addNewUserToDatabase = ({db, result}) => {
     // Check if user already exists in firestore
@@ -13,6 +14,7 @@ const addNewUserToDatabase = ({db, result}) => {
           email: result.email,
           completedProfile: false,
           points: 0,
+          posts: []
       };
       db.collection("users").doc(result.email).set({...data});
       }
@@ -56,4 +58,19 @@ const getUserCollegeAndSubjects = ({db, user}) => {
   })
 }
 
-module.exports = {addNewUserToDatabase,checkUserProfile,completeUserProfile,getUserCollegeAndSubjects};
+// ADD USER POST
+const addPostToDatabase = ({db, email, postContent, postType, timestamp}) => {
+  // Check if user already exists in firestore
+  db.collection("users").doc(email).get().then((document) => {
+   
+      post = document.posts
+      post=post.push({timestamp: timestamp, content: postContent, type: postType})
+      console.log(post)
+    db.collection("users").doc(email).update({posts: post});
+    }).catch(error => {
+      return error
+    })
+
+};
+
+module.exports = {addNewUserToDatabase,checkUserProfile,completeUserProfile,getUserCollegeAndSubjects, addPostToDatabase};

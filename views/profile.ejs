@@ -176,7 +176,6 @@
     <div class="form-group col-md-6">
       <label for="example-text-input" class="form-control-label">Preferred Subject</label>
       <select name="subject" id="subject" class="form-control selectpicker">
-        <option>Match me with any subject</option>
         <% userData.subjects.map(subject => { %>
         <option><%= subject %></option>
         <% }) %>
