@@ -42,7 +42,7 @@ router.post("/signup/submit", function (req, res, next) {
       let errorMessage = result;
       res.render("signup", {errorMessage})
     } else {
-      res.redirect("/checkUserProfile");
+      res.redirect("/complete-profile");
     }
     
   });
@@ -150,13 +150,18 @@ router.post("/complete-profile/submit", function(req,res,next) {
   const college = req.body.college;
   const subjectsArray = req.body["subjects-array"];
   firestore.completeUserProfile({db:firebaseModel.db, user:currentUser, college:college, subjects:subjectsArray});
-  res.redirect('/users/');
+  res.redirect('/checkUserProfile');
 })
 
 /* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
-  res.render('chat', {username:currentUser.displayName});
+  firestore.getUserPoints({db:firebaseModel.db, user:currentUser}).then(result => {
+    res.render('chat', {username:currentUser.displayName, userPoints:result.points});
+  })
+  
 });
+
+
 
 
 module.exports = router;

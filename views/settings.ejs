@@ -1,0 +1,216 @@
+<!--
+=========================================================
+* Argon Dashboard - v1.2.0
+=========================================================
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+
+* Copyright  Creative Tim (http://www.creative-tim.com)
+* Coded by www.creative-tim.com
+=========================================================
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="518932760125-m9tqgoo3nmkedpghqpcvlpeeai7qdcrn.apps.googleusercontent.com">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4." />
+    <meta name="author" content="Creative Tim" />
+    <title>Connectify</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png" />
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
+    <!-- Icons -->
+    <link rel="stylesheet" href="../assets/vendor/nucleo/css/nucleo.css" type="text/css" />
+    <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" />
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/custom.css" type="text/css" />
+</head>
+
+<body class="bg-default">
+    <!-- Navbar -->
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+            <div class="container">
+                <div class="header-body text-center mb-7">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+                            <h1 class="text-white">Hi, <%= userData.username %></h1>
+                            <p class="text-lead text-white">
+                                Update your profile below.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="separator separator-bottom separator-skew zindex-100">
+                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+                </svg>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container mt--8 pb-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-7">
+                    <div class="card bg-secondary border-0 mb-0">
+                        <div class="card-header bg-transparent pb-5">
+
+                            <div class="card-body px-lg-5 py-lg-5">
+                                <form method="POST" action="update/submit">
+
+                                    <div class="form-group mb-3">
+                                        <div class="input-group input-group-merge input-group-alternative">
+                                            <input required class="form-control" name="name" value="<%= userData.username %>" type="text"
+                                                id="name" />
+                                    
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <div class="input-group input-group-merge input-group-alternative">
+                                            <input required class="form-control" name="college" value="<%= userData.college %>"
+                                                placeholder="What college do you go to?" type="text" id="college" />
+                                                
+                                        </div>
+                                    </div>
+
+                                    <div class=" input-group mb-3 ">
+                                    
+                                        <input disabled id="email" value="<%= userData.email %>" class="form-control" type="text" name="email"
+                                            aria-describedby="button-addon2" class="form-control" S />
+                                    </div>
+
+                                    <input type="hidden" id="subjects-array" name="subjects-array" value="<%= userData.subjectsText %>"></input>
+                                    <br>
+
+                                    <div class="form-group">
+
+                                        
+
+                                        <div class=" input-group mb-3 ">
+
+                                            <input id="subjects-input" class="form-control"
+                                                placeholder="Enter your subjects" type="text" name="subjects"
+                                                aria-describedby="button-addon2" class="form-control" S />
+
+                                            <div class="input-group-append">
+                                                <center>
+                                                    <button class="btn btn-outline-primary" type="button"
+                                                        id="button-addon2" onclick="addSubject()">Add</button>
+                                                </center>
+                                            </div>
+                                        </div>
+
+                                        <small id="error" style="color:red;"></small>
+                                        <div id="subjects-list">
+                                            <% for (let i = 0; i < userData.subjects.length; i++) { %>
+                                            <span id="<%= userData.subjects[i] %>" class='badge badge-default'><%= userData.subjects[i] %><a onclick='removeSubject("<%= userData.subjects[i] %>")' style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>
+                                            </span>
+                                            <% } %>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <br>
+
+                                        <div class=" input-group mb-3 ">
+                                        
+                                            <input id="password-input" class="form-control" placeholder="Set a new password (Optional)" type="password" name="password"
+                                                aria-describedby="button-addon2" class="form-control" S />
+                                        
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary my-4" id="submit-button">
+                                            Update
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="py-5" id="footer-main">
+            <div class="container">
+                <div class="row align-items-center justify-content-xl-between">
+                    <div class="col-xl-6">
+                        <div class="copyright text-center text-xl-left text-muted">
+                            &copy; 2020
+                            <a href="/" class="font-weight-bold ml-1" target="_blank">Connectify</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6"></div>
+                </div>
+            </div>
+        </footer>
+        <!-- Argon Scripts -->
+        <!-- Core -->
+        <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/vendor/js-cookie/js.cookie.js"></script>
+        <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <!-- Argon JS -->
+        <script src="../assets/js/argon.js?v=1.2.0"></script>
+        <script>
+            const addSubject = () => {
+                const submitButton = document.getElementById("submit-button");
+                const subjectList = document.getElementById("subjects-list");
+                const subject = document.getElementById("subjects-input").value;
+                const subjectsNodeList = document.getElementsByTagName("li");
+                const subjectsArray = document.getElementById("subjects-array");
+                if (subject) {
+                    submitButton.disabled = false;
+                    document.getElementById("error").textContent = "";
+                    subjectList.innerHTML += "<span id=" + subject + " class='badge badge-default'>" + subject + "<a onclick=" + "removeSubject('" + subject + "')" + " style = 'color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject' > X</a ></span>"
+                    subjectsArray.value += subject + '|'
+                } else {
+                    document.getElementById("error").textContent = "Subjects cannot be blank.";
+                };
+
+            };
+
+            const removeSubject = (subjectId) => {
+                const parentElement = document.getElementById("subjects-list");
+                const subjectToRemove = document.getElementById(subjectId);
+                parentElement.removeChild(subjectToRemove);
+
+                const subjectsArrayDOM = document.getElementById("subjects-array");
+                const subjectsArray = subjectsArrayDOM.value.split("|");
+                subjectsArray.pop();
+                const newSubjectsArray = subjectsArray.filter(subject => {
+                    return subject !== subjectId;
+                });
+
+                subjectsArrayValue = ''
+                newSubjectsArray.map(element => {
+                    subjectsArrayValue += element + "|"
+                });
+
+                subjectsArrayDOM.value = subjectsArrayValue;
+
+                console.log(newSubjectsArray)
+
+            }
+
+        </script>
+</body>
+
+</html>
