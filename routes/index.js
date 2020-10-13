@@ -129,7 +129,7 @@ router.get("/checkUserProfile", function (req, res, next) {
   if (currentUser) {
     firestore.checkUserProfile({db:firebaseModel.db, user:currentUser}).then((completedProfile) => {
       console.log('COMPLETEDPROFILE', completedProfile)
-      if (completedProfile) {
+      if (completedProfile===true) {
         console.log("USER HAS COMPLETED THEIR PROFILE");
         res.redirect('/users');
       } else {
