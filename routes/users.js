@@ -34,7 +34,26 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/settings', function(req, res, next) {
-  res.render("settings");
+  if (currentUser) {
+    firestore.getUserCollegeAndSubjects({db:firebaseModel.db, user:currentUser}).then(result => {
+      let subjectsArrayText = "";
+      result.subjects.map(subject => {
+        subjectsArrayText += subject + '|'
+      });
+
+      const userData = {
+        username:currentUser.displayName, 
+        email:currentUser.email, 
+        college:result.college,
+        subjects:result.subjects, 
+        subjectsText:subjectsArrayText};
+      res.render("settings", {userData});
+    })
+  } else {
+    res.redirect('/');
+  }
+  
+  
 })
 
 module.exports = router;

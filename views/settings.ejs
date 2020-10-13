@@ -46,9 +46,9 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                            <h1 class="text-white">Hi USERNAME</h1>
+                            <h1 class="text-white">Hi, <%= userData.username %></h1>
                             <p class="text-lead text-white">
-                                Update your profile
+                                Update your profile below.
                             </p>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
 
                                     <div class="form-group mb-3">
                                         <div class="input-group input-group-merge input-group-alternative">
-                                            <input class="form-control" name="name" value="NAME" placeholder="What college do you go to?" type="text"
+                                            <input class="form-control" name="name" value="<%= userData.username %>" type="text"
                                                 id="name" />
                                     
                                         </div>
@@ -81,7 +81,7 @@
 
                                     <div class="form-group mb-3">
                                         <div class="input-group input-group-merge input-group-alternative">
-                                            <input class="form-control" name="college" value="COLLEGE"
+                                            <input class="form-control" name="college" value="<%= userData.college %>"
                                                 placeholder="What college do you go to?" type="text" id="college" />
                                                 
                                         </div>
@@ -89,11 +89,11 @@
 
                                     <div class=" input-group mb-3 ">
                                     
-                                        <input disabled id="email" value="EMAIL@EMAIL.COM" class="form-control" type="text" name="email"
+                                        <input disabled id="email" value="<%= userData.email %>" class="form-control" type="text" name="email"
                                             aria-describedby="button-addon2" class="form-control" S />
                                     </div>
 
-                                    <input type="hidden" id="subjects-array" name="subjects-array" value="SUBJ1|SUBJ2|"></input>
+                                    <input type="hidden" id="subjects-array" name="subjects-array" value="<%= userData.subjectsText %>"></input>
                                     <br>
 
                                     <div class="form-group">
@@ -116,11 +116,10 @@
 
                                         <small id="error" style="color:red;"></small>
                                         <div id="subjects-list">
-                                            <span id="SUBJ1" class='badge badge-default'>SUBJ1<a onclick='removeSubject("SUBJ1")' style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>
+                                            <% for (let i = 0; i < userData.subjects.length; i++) { %>
+                                            <span id="<%= userData.subjects[i] %>" class='badge badge-default'><%= userData.subjects[i] %><a onclick='removeSubject("<%= userData.subjects[i] %>")' style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>
                                             </span>
-                                            <span id="SUBJ2" class='badge badge-default'>SUBJ2<a onclick='removeSubject("SUBJ2")'
-                                                    style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>
-                                            </span>
+                                            <% } %>
                                         </div>
                                         <br>
                                         <br>
@@ -185,9 +184,7 @@
                 if (subject) {
                     submitButton.disabled = false;
                     document.getElementById("error").textContent = "";
-                    subjectList.innerHTML += (" <span class='badge badge-default'>" 
-                        + subject + "<a onclick='removeSubject()' style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>" + "</span>");
-
+                    subjectList.innerHTML += "<span id=" + subject + " class='badge badge-default'>" + subject + "<a onclick=" + "removeSubject('" + subject + "')" + " style = 'color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject' > X</a ></span>"
                     subjectsArray.value += subject + '|'
                 } else {
                     document.getElementById("error").textContent = "Subjects cannot be blank.";
