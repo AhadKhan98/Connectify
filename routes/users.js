@@ -21,7 +21,11 @@ router.get('/', function(req, res, next) {
   if (currentUser) {
     firestore.getUserCollegeAndSubjects({db:firebaseModel.db, user:currentUser})
     .then(data => {
-      res.render('landing.ejs', {username:currentUser.displayName, userData:data});
+      firestore.getUserPoints({db:firebaseModel.db, user:currentUser}).then(user => {
+        // firestore.addUserPoints({db:firebaseModel.db, user:currentUser, points:30});
+        res.render('landing.ejs', {username:currentUser.displayName, userData:data, userPoints:user.points});
+      })
+      
     });
   } else {
     res.render("index", {user:currentUser});

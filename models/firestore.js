@@ -54,6 +54,35 @@ const getUserCollegeAndSubjects = ({db, user}) => {
   .catch(error => {
     return error
   })
+};
+
+
+// GET USER'S POINTS
+const getUserPoints = ({db, user}) => {
+  return db.collection("users").doc(user.email).get()
+  .then(snapshot => {
+    return {points:snapshot.data().points};
+  })
+  .catch(error => {
+    return error
+  })
+};
+
+// ADD POINTS TO USER
+const addUserPoints = ({db, user, points}) => {
+  let currentUserPoints = 0;
+  getUserPoints({db, user}).then(result => {
+    currentUserPoints = result.points;
+    newUserPoints = currentUserPoints += points;
+    db.collection("users").doc(user.email).update({points:newUserPoints});
+  });
 }
 
-module.exports = {addNewUserToDatabase,checkUserProfile,completeUserProfile,getUserCollegeAndSubjects};
+module.exports = {
+  addNewUserToDatabase,
+  checkUserProfile,
+  completeUserProfile,
+  getUserCollegeAndSubjects,
+  getUserPoints,
+  addUserPoints,
+};

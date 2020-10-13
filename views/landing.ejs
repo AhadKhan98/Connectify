@@ -32,6 +32,7 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="/assets/css/argon.css?v=1.2.0" type="text/css">
+  <link rel="stylesheet" href="assets/css/custom.css">
   <style>
     html{
   
@@ -117,7 +118,11 @@
                 <div class="media align-items-center">
                  
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <i class="ni ni-circle-08" style="font-size: medium;"></i>
+                    <div class="user-points">
+                      <i style="color:yellow;" class="fas fa-coins points-icon"><p><%= userPoints %> Points</p></i>
+                      
+                    </div>
+                    
                     <span class="mb-0 text-sm  font-weight-bold"><%= username %></span>
                   </div>
                 </div>
