@@ -93,7 +93,7 @@
                                             aria-describedby="button-addon2" class="form-control" S />
                                     </div>
 
-                                    <input type="hidden" id="subjects-array" name="subjects-array"></input>
+                                    <input type="hidden" id="subjects-array" name="subjects-array" value="SUBJ1|SUBJ2|"></input>
                                     <br>
 
                                     <div class="form-group">
@@ -116,8 +116,11 @@
 
                                         <small id="error" style="color:red;"></small>
                                         <div id="subjects-list">
-                                        <span class='badge badge-default'>SUBJ1<a onclick='removeSubject()' style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>
-                                        </span>
+                                            <span id="SUBJ1" class='badge badge-default'>SUBJ1<a onclick='removeSubject("SUBJ1")' style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>
+                                            </span>
+                                            <span id="SUBJ2" class='badge badge-default'>SUBJ2<a onclick='removeSubject("SUBJ2")'
+                                                    style='color:#FF0000; padding-left:10px; cursor:pointer;' class='remove-subject'>X</a>
+                                            </span>
                                         </div>
                                         <br>
                                         <br>
@@ -174,7 +177,6 @@
         <script src="../assets/js/argon.js?v=1.2.0"></script>
         <script>
             const addSubject = () => {
-                console.log("ADD SUBJECT")
                 const submitButton = document.getElementById("submit-button");
                 const subjectList = document.getElementById("subjects-list");
                 const subject = document.getElementById("subjects-input").value;
@@ -190,6 +192,29 @@
                 } else {
                     document.getElementById("error").textContent = "Subjects cannot be blank.";
                 };
+
+            };
+
+            const removeSubject = (subjectId) => {
+                const parentElement = document.getElementById("subjects-list");
+                const subjectToRemove = document.getElementById(subjectId);
+                parentElement.removeChild(subjectToRemove);
+
+                const subjectsArrayDOM = document.getElementById("subjects-array");
+                const subjectsArray = subjectsArrayDOM.value.split("|");
+                subjectsArray.pop();
+                const newSubjectsArray = subjectsArray.filter(subject => {
+                    return subject !== subjectId;
+                });
+
+                subjectsArrayValue = ''
+                newSubjectsArray.map(element => {
+                    subjectsArrayValue += element + "|"
+                });
+
+                subjectsArrayDOM.value = subjectsArrayValue;
+
+                console.log(newSubjectsArray)
 
             }
 
