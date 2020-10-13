@@ -54,7 +54,7 @@
         <div class="header-container d-flex align-items-center">
           <div class="logo mr-auto">
             <h1 class="text-light">
-              <a href="index.html"><span>Connectify</span></a>
+              <a href="/"><span>Connectify</span></a>
             </h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html"><img src="assets1/img/logo.png" alt="" class="img-fluid"></a>-->
@@ -117,6 +117,7 @@
         </h2>
         <% } else { %>
         <h1>Welcome, <%= user.displayName %>!</h1>
+        <a href="/users" class="btn-get-started scrollto">Start Studying</a>
         <% } %> <% if (!user) { %>
         <a href="/signUp" class="btn-get-started scrollto">Get Started</a>
         <% } %>
