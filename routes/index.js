@@ -44,7 +44,7 @@ router.post("/signup/submit", function (req, res, next) {
     } else {
       res.redirect("/checkUserProfile");
     }
-    
+
   });
 });
 
@@ -87,7 +87,7 @@ router.get("/auth/github/callback", function(res, req, next) {
 router.get("/googlesignintoken", function(req,res,next) {
   console.log("GOT GOOGLE SIGN IN TOKEN");
   const google_id_token = req.query.id_token
-  console.log(google_id_token)  
+  console.log(google_id_token)
   firebaseModel.googleSignIn(google_id_token).then(result => {
     if (typeof result === "string") {
       res.render("login", {errorMessage:"Failed to sign in. Please try again."})
@@ -135,7 +135,7 @@ router.get("/checkUserProfile", function (req, res, next) {
       } else {
         res.redirect('/complete-profile');
       }
-    });  
+    });
   } else {
     res.redirect('/');
   };
@@ -155,7 +155,7 @@ router.post("/complete-profile/submit", function(req,res,next) {
 
 /* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
-  res.render('chat', {username:currentUser.displayName});
+  res.render('chat', {username: currentUser.displayName});
 });
 
 

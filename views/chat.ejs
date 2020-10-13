@@ -32,7 +32,7 @@
   <!-- Argon CSS -->
   <link rel="stylesheet" href="/assets/css/argon.css?v=1.2.0" type="text/css">
   <style>
-  
+
     .container1 {
   border: 2px solid #dedede;
   background-color: #f1f1f1;
@@ -78,7 +78,7 @@
                 <span class="nav-link-text">Connect</span>
               </a>
             </li>
-          
+
             <li class="nav-item">
               <a class="nav-link" href="/users/profile/id">
                 <i class="ni ni-single-02 text-yellow"></i>
@@ -97,10 +97,10 @@
                 <span class="nav-link-text">Logout</span>
               </a>
             </li>
-            
+
           </ul>
           <!-- Divider -->
-          
+
         </div>
       </div>
     </div>
@@ -127,12 +127,12 @@
                 </div>
               </div>
             </li>
-          
+
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
-                 
+
                   <div class="media-body  ml-2  d-none d-lg-block">
                     <i class="ni ni-circle-08" style="font-size: medium;"></i>
                     <span class="mb-0 text-sm  font-weight-bold"><%= username %></span>
@@ -151,7 +151,7 @@
                   <i class="ni ni-settings-gear-65"></i>
                   <span>Settings</span>
                 </a>
-              
+
                 <a href="#!" class="dropdown-item">
                   <i class="ni ni-support-16"></i>
                   <span>Support</span>
@@ -176,54 +176,57 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
         <div id="messages" style="overflow:scroll; height:600px;">
-            
+
       <!-- Footer -->
-     
+
     </div>
     <div class="container">
-        <div class="row">
-            <center>
-        <form id="message-form" style=" display: flex;
-        flex-flow: row wrap;
-        align-items: center;">
-            <div class="col-md-9">
-                <input type="text" class="form-control" placeholder="Enter message" aria-label="Recipient's username" aria-describedby="button-addon2">
+      <div class="row">
+        <center>
+          <form id="message-form" style=" display: flex;
+            flex-flow: row wrap;
+            align-items: center;">
+              <div class="col-md-9">
+                  <input type="text" class="form-control" placeholder="Enter message" aria-label="Recipient's username" aria-describedby="button-addon2">
 
-            </div>
-               <div class="col-md-3">
-          <button class="btn btn-outline-primary" type="submit" id="button-addon2">Send</button>
-        </div>
-    </form>
-</center>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Send</button>
+              </div>
+          </form>
+        </center>
     </div>
-    
+
       </div>
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
   <script id="message-template" type="text/html">
-    <div class="container1">
-        <h2>{{username}}</h2>
-        <p>{{message}}</p>
-        <span class="time-right">{{createdAt}}</span>
+    <div class="card" style="margin: 2rem 0;">
+      <!-- Card body -->
+      <div class="card-body">
+        <h5 class="card-title text-uppercase text-muted mb-0">{{username}}</h5>
+        <p class="h4 font-weight-bold mb-0">{{message}}</p>
+        <p class="mt-3 mb-0 text-sm"><span class="text-nowrap">Sent {{createdAt}}</span></p>
       </div>
+    </div>
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/assets/js/chat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"></script>
-<script src="https://cdn.rawgit.com/khalidsalomao/simple-query-string/22cc5bbe/src/simplequerystring.min.js"></script>
-  <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <!-- Optional JS -->
-  <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
-  <!-- Argon JS -->
-  <script src="/assets/js/argon.js?v=1.2.0"></script>
-</body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"></script>
+  <script src="https://cdn.rawgit.com/khalidsalomao/simple-query-string/22cc5bbe/src/simplequerystring.min.js"></script>
+    <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Optional JS -->
+    <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+    <!-- Argon JS -->
+    <script src="/assets/js/argon.js?v=1.2.0"></script>
+  </body>
 
 </html>

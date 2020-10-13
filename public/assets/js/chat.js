@@ -20,7 +20,7 @@ const college = params.get('college');
 const subject = params.get('subject')
 const mic = params.get('mic')? params.get('mic'): 'No'
 const video = params.get('video')? params.get('video'): 'No'
-const room = college+subject+mic+video
+const room = "College:" + college + ";Subject:" + subject + ";Mic:" + mic + ";Video:" + video + ";"
 console.log(room)
 // const autoscroll=()=>{
 //     const $newMessage =$messages.lastElementChild
@@ -36,7 +36,7 @@ socket.on('message',(message)=>{
         username:message.username
     })
     $messages.insertAdjacentHTML('beforeend',html)
-    
+
     // autoscroll()
 })
 

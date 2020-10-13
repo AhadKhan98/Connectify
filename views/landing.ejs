@@ -184,28 +184,33 @@
               <br>
               <br>
 
-              <div class="form-group task-form-group" id="">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">
-                      <input type="checkbox" aria-label="Checkbox for following text input" disabled="true">
+              <ul class="tasks-list" style="padding-inline-start: 0;">
+                <div class="form-group task-form-group" id="0">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input" disabled="true">
+                      </div>
+                    </div>
+                    <input type="text" class="form-control task-description" aria-label="Text input with checkbox" placeholder="Complete textbook readings chapter 1-3...">
+                    <div class="input-group-append">
+                      <select class="form-control" id="task-select-priority">
+                        <option>1 (High)</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5 (Low)</option>
+                      </select>
+                    </div>
+                    <div class="row mx-2 justify-content-center align-self-center delete-goal-button">
+                      <i class="ni ni-fat-remove" style="font-size: 1.5em;" onclick="deleteGoal(0)"></i>
                     </div>
                   </div>
-                  <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="Complete textbook readings chapter 1-3...">
-                  <div class="input-group-append">
-                    <select class="form-control" id="exampleFormControlSelect1">
-                      <option>1 (High)</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5 (Low)</option>
-                    </select>
-                  </div>
                 </div>
-              </div>
+              </ul>
 
-              <div class="">
-                <button type="button" class="btn btn-secondary">&#43; Add new task</button>
+              <div>
+                <button type="button" class="btn btn-secondary" onclick="addGoal()">&#43; Add new task</button>
               </div>
           </div>
 
@@ -216,7 +221,7 @@
 
             <!-- Simple slider -->
             <div class="input-slider-container">
-              <div id="input-slider" class="input-slider" data-range-value-min="20" data-range-value-max="120" data-range-step="10"></div>
+              <div id="input-slider" class="input-slider" data-range-value-min="20" data-range-value-max="120"></div>
               <!-- Input slider values -->
               <div class="row mt-3">
                 <div class="col-6">
@@ -249,10 +254,10 @@
             <br>
             <br>
 
-            <label for="example-search-input" class="form-control-label">Any notes you would like us to include in your match?</label>
+            <label for="example-search-input" class="form-control-label">Any notes you would like us to tell your study partner?</label>
             <br>
 
-            <input type="text" class="form-control" placeholder="Notes here...">
+            <textarea class="form-control" id="notes" rows="3" placeholder="Additional details about the study session, icebreakers and conversation starters, and more here..."></textarea>
           </div>
         </div>
 
@@ -260,7 +265,7 @@
         <center>
           <input class="form-control" type="hidden"  name="username" id="username"  value = "<%= username %>" required />
           <button class="btn btn-icon btn-primary" type="submit">
-            <span class="btn-inner--icon"><i class="ni ni-atom"></i>&nbsp Join the study queue</span>
+            <span class="btn-inner--icon"><i class="ni ni-atom"></i>&nbsp Join the study room</span>
           </button>
           <br>
           <br>
@@ -303,7 +308,40 @@
   <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <!-- Optional JS -->
   <script src="/assets/vendor/nouislider/distribute/nouislider.min.js"></script>
+  <script>
+    var slider = document.getElementById('input-slider');
 
+    console.log(slider);
+    var options = {
+      start: [60],
+      step: 10,
+      range: {
+          'min': [20],
+          'max': [120]
+      }
+    }
+    //slider.noUiSlider.updateOptions(options, true /* Allow destruction + rebuilding */ );
+
+    var goalIndex = 0;
+
+    var addGoal = function() {
+      console.log("add new task");
+      var tasks = $('.tasks-list');
+      var newTask = $('.task-form-group').first().clone();
+      newTask.attr("id", ++goalIndex);
+      newTask.find(".delete-goal-button i").attr('onclick', "deleteGoal(" + goalIndex + ")");
+      newTask.find(".task-description").val("");
+      tasks.append(newTask);
+    }
+
+    var deleteGoal = function(id) {
+      console.log("delete new task");
+      var tasks = $('.task-form-group');
+      if (tasks.length == 1) return;
+      $('.task-form-group#' + id).remove();
+    }
+
+  </script>
   <!-- Argon JS -->
   <script src="/assets/js/argon.min.js?v=1.2.0"></script>
 </body>
