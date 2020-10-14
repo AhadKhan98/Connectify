@@ -34,6 +34,18 @@ router.get('/', function(req, res, next) {
   
 });
 
+/* Profile Page */
+router.get('/profile', function(req,res,next) {
+  if (currentUser) {
+    firestore.getUserPosts({db:firebaseModel.db, user:currentUser}).then(posts => {
+      let postsArray = posts.reverse();
+      res.render('profile.ejs', {user:currentUser, posts:postsArray});
+    });
+  } else {
+    res.redirect('/');
+  }
+})
+
 /* Upload Post. */
 router.get('/upload', function(req, res, next) {
   if (currentUser) {
@@ -84,19 +96,22 @@ router.get('/settings', function(req, res, next) {
 });
 
 router.post('/update/submit', function(req,res,next) {
-  console.log(req.body);
-  subjectsArray = req.body["subjects-array"].split('|');
-  subjectsArray.pop();
-  const updatedUserData = {
-    name: req.body.name,
-    college: req.body.college,
-    subjects: subjectsArray,
-    password: req.body.password,
-  };
-  firestore.updateUserProfile({db:firebaseModel.db, user:currentUser, newData:updatedUserData})
-
-
-  res.redirect('/users');
+  if (currentUser) {
+    console.log(req.body);
+    subjectsArray = req.body["subjects-array"].split('|');
+    subjectsArray.pop();
+    const updatedUserData = {
+      name: req.body.name,
+      college: req.body.college,
+      subjects: subjectsArray,
+      password: req.body.password,
+    };
+    firestore.updateUserProfile({db:firebaseModel.db, user:currentUser, newData:updatedUserData})
+    res.redirect('/users');
+  } else {
+    res.redirect('/');
+  }
+  
 })
 
 module.exports = router;
