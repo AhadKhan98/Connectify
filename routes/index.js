@@ -29,7 +29,12 @@ router.get("/", function (req, res, next) {
 
 // Show Sign Up Page
 router.get("/signUp", function (req, res, next) {
-  res.render("signup", {errorMessage:""});
+  if (currentUser) {
+    res.redirect('/');
+  } else {
+    res.render("signup", {errorMessage:""});
+  }
+  
 });
 
 // Form Submit (POST METHOD)
@@ -42,7 +47,7 @@ router.post("/signup/submit", function (req, res, next) {
       let errorMessage = result;
       res.render("signup", {errorMessage})
     } else {
-      res.redirect("/checkUserProfile");
+      res.redirect("/complete-profile");
     }
 
   });
@@ -99,7 +104,12 @@ router.get("/googlesignintoken", function(req,res,next) {
 
 // Show Login Page
 router.get("/login", function (req, res, next) {
-  res.render("login", {errorMessage:""});
+  if (currentUser) {
+    res.redirect('/');
+  } else {
+    res.render("login", {errorMessage:""});
+  }
+  
 });
 
 // Form Submit (POST METHOD)
@@ -142,7 +152,12 @@ router.get("/checkUserProfile", function (req, res, next) {
 });
 
 router.get("/complete-profile", function (req,res,next) {
-  res.render("complete-profile", {displayName:currentUser.displayName})
+  if (currentUser) {
+    res.render("complete-profile", {displayName:currentUser.displayName});
+  } else {
+    res.redirect('/');
+  }
+  
 });
 
 router.post("/complete-profile/submit", function(req,res,next) {
@@ -150,13 +165,21 @@ router.post("/complete-profile/submit", function(req,res,next) {
   const college = req.body.college;
   const subjectsArray = req.body["subjects-array"];
   firestore.completeUserProfile({db:firebaseModel.db, user:currentUser, college:college, subjects:subjectsArray});
-  res.redirect('/users/');
+  res.redirect('/checkUserProfile');
 })
 
 /* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
-  res.render('chat', {username: currentUser.displayName});
+  if (currentUser) {
+    firestore.getUserPoints({db:firebaseModel.db, user:currentUser}).then(result => {
+    res.render('chat', {username:currentUser.displayName, userPoints:result.points});
+  });
+  } else {
+    res.redirect('/');
+  }
 });
+
+
 
 
 module.exports = router;
