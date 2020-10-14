@@ -30,8 +30,8 @@ io.on('connection',(socket)=>{
   console.log('Connected')
 
 
-  socket.on('join',({username,room},callback)=>{
-    const {error,user}=addUser({id:socket.id,username,room})
+  socket.on('join',({username,room,email},callback)=>{
+    const {error,user}=addUser({id:socket.id,username,room,email})
     if(error){
       return callback(error)
     }
@@ -44,7 +44,6 @@ io.on('connection',(socket)=>{
 
         College: ` + description.college + `
         Subject: ` + description.subject + `
-        Study session duration: ` + description.duration + `
         Mic: ` + description.mic + `
         Video: ` + description.video + `
 
@@ -52,24 +51,34 @@ io.on('connection',(socket)=>{
 
         Chat with your study partner(s) below. Happy Working!`,'Connectify')
     )
-    socket.broadcast.to(user.room).emit('message',generateMessage(`${username} has joined`,'Connectify'))
+    socket.broadcast.to(user.room).emit('message',generateMessage(`${username} has joined`,'Connectify','#'))
+    io.to(user.room).emit('roomdata',{
+      room:user.room,
+      users:getUsersInRoom(user.room)
+    })
     callback()
 
 
   })
+
+
   socket.on('send',(msg,callback)=>{
     const filter = new Filter ()
     const user=getUser(socket.id)
     if (filter.isProfane(msg)){
       return callback ('Profanity is not allowed')
     }
-    io.to(user.room).emit('message',generateMessage(msg,user.username))
+    io.to(user.room).emit('message',generateMessage(msg,user.username,user.email))
     callback();
   })
   socket.on('disconnect',()=>{
     const user=removeUser(socket.id)
     if(user){
-      io.to(user.room).emit('message',generateMessage(`${user.username} has left`,'Connectify'))
+      io.to(user.room).emit('message',generateMessage(`${user.username} has left`,'Connectify','#'))
+      io.to(user.room).emit('roomdata',{
+        room:user.room,
+        users:getUsersInRoom(user.room)
+      })
     }
   })
 })

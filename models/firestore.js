@@ -74,12 +74,12 @@ const addPostToDatabase = ({db, email, postContent, postType, timestamp}) => {
 };
 
 // GET USER'S POSTS
-const getUserPosts = ({db, user}) => {
-  return db.collection("users").doc(user.email).get().then((snapshot) => {
+const getUserPosts = ({db, email}) => {
+  return db.collection("users").doc(email).get().then((snapshot) => {
     return snapshot.data().posts;
   });
 };
-
+ 
 // GET USER'S POINTS
 const getUserPoints = ({db, user}) => {
   return db.collection("users").doc(user.email).get()

@@ -171,9 +171,9 @@ router.post("/complete-profile/submit", function(req,res,next) {
 /* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
   if (currentUser) {
-    firestore.getUserPoints({db:firebaseModel.db, user:currentUser}).then(result => {
-    res.render('chat', {username:currentUser.displayName, userPoints:result.points});
-  });
+   
+    res.render('chat', {username:currentUser.displayName, email:currentUser.email});
+
   } else {
     res.redirect('/');
   }

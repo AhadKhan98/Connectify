@@ -1,8 +1,9 @@
-const generateMessage=(message,username)=>{
+const generateMessage=(message,username,email)=>{
     return {
         message,
         createdAt: Date.now(),
-        username:username
+        username:username,
+        email:email
     }
     }
 

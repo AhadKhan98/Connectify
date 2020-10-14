@@ -3,7 +3,7 @@ var router = express.Router();
 var firebase = require("firebase");
 const firebaseModel = require("../models/firebase");
 const firestore = require("../models/firestore");
-
+const moment= require('moment')
 /* FIREBASE AUTH LISTENER */
 let currentUser = firebase.auth().currentUser;
 firebase.auth().onAuthStateChanged((user) => {
@@ -23,7 +23,8 @@ router.get('/', function(req, res, next) {
     .then(data => {
       firestore.getUserPoints({db:firebaseModel.db, user:currentUser}).then(user => {
         // firestore.addUserPoints({db:firebaseModel.db, user:currentUser, points:30});
-        res.render('landing.ejs', {username:currentUser.displayName, userData:data, userPoints:user.points});
+        console.log(user,data)
+        res.render('landing.ejs', {username:currentUser.displayName, email:currentUser.email, userData:data});
       })
       
     });
@@ -35,11 +36,26 @@ router.get('/', function(req, res, next) {
 });
 
 /* Profile Page */
-router.get('/profile', function(req,res,next) {
+router.get('/profile/:email', function(req,res,next) {
   if (currentUser) {
-    firestore.getUserPosts({db:firebaseModel.db, user:currentUser}).then(posts => {
+    email=req.params.email
+    firestore.getUserPosts({db:firebaseModel.db, email:email}).then(posts => {
       let postsArray = posts.reverse();
-      res.render('profile.ejs', {user:currentUser, posts:postsArray});
+      firestore.getUserCollegeAndSubjects({db:firebaseModel.db, user:currentUser}).then(result => {
+        let subjectsArrayText = "";
+        result.subjects.map(subject => {
+          subjectsArrayText += subject + '|'
+        });
+  
+        const userData = {
+          username:currentUser.displayName, 
+          email:currentUser.email, 
+          college:result.college,
+          subjects:result.subjects, 
+          subjectsText:subjectsArrayText};
+          res.render('profile.ejs', {user:currentUser, posts:postsArray, userData,moment});
+      })
+     
     });
   } else {
     res.redirect('/');
@@ -50,7 +66,7 @@ router.get('/profile', function(req,res,next) {
 router.get('/upload', function(req, res, next) {
   if (currentUser) {
  
-      res.render('upload.ejs', {username:currentUser.displayName, email:currentUser.email});
+      res.render('upload.ejs', {username:currentUser.displayName, mail:currentUser.email});
   
   } else {
     res.render("upload", {user:currentUser});
@@ -88,7 +104,7 @@ router.get('/settings', function(req, res, next) {
         college:result.college,
         subjects:result.subjects, 
         subjectsText:subjectsArrayText};
-      res.render("settings", {username:currentUser.displayName, email:currentUser.email,userData,userPoints:currentUser.userPoints});
+      res.render("settings", {username:currentUser.displayName, email:currentUser.email,userData});
     })
   } else {
     res.redirect('/');
