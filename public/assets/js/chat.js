@@ -18,9 +18,11 @@ const params = new URL(location.href).searchParams;
 const username = params.get('username')
 const college = params.get('college');
 const subject = params.get('subject')
+const duration = params.get('duration')
 const mic = params.get('mic')? params.get('mic'): 'No'
 const video = params.get('video')? params.get('video'): 'No'
-const room = "College:" + college + ";Subject:" + subject + ";Mic:" + mic + ";Video:" + video + ";"
+const notes = params.get('notes')
+const room = "College:" + college + ";Subject:" + subject + ";Duration:" + duration + ";Mic:" + mic + ";Video:" + video + ";Notes:" + notes + ";"
 console.log(room)
 // const autoscroll=()=>{
 //     const $newMessage =$messages.lastElementChild

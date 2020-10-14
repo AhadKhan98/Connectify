@@ -38,19 +38,19 @@ io.on('connection',(socket)=>{
       socket.join(user.room)
      const number = numberOfUsersInRoom(user.room)
      const description = getRoomDescription(user.room)
+     // There are ${number} users online in this session. If you are the only one here, please wait for other users to show up.
     socket.emit('message',
       generateMessage(`Welcome to your study room!
 
-        There are ${number} users online in this session. If you are the only one here, please wait for other users to show up.
-        &nbsp;&nbsp;
-        Preferred college: ` + description.college + `&nbsp;
-        Preferred subject: ` + description.subject + `&nbsp;
-        Preferred study session duration: ` + description.duration + `&nbsp;
-        Mic: ` + description.mic + `&nbsp;
+        College: ` + description.college + `
+        Subject: ` + description.subject + `
+        Study session duration: ` + description.duration + `
+        Mic: ` + description.mic + `
         Video: ` + description.video + `
-        &nbsp;&nbsp;
-        Zoom link: ` + `&nbsp;
-        Happy Working!`,'Connectify')
+
+        Study room link: http://meet.google.com/new
+
+        Chat with your study partner(s) below. Happy Working!`,'Connectify')
     )
     socket.broadcast.to(user.room).emit('message',generateMessage(`${username} has joined`,'Connectify'))
     callback()
