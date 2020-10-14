@@ -63,13 +63,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/users/profilefw">
+              <a class="nav-link" href="/users/profile/<%= email %>">
                 <i class="ni ni-single-02 text-yellow"></i>
                 <span class="nav-link-text">Profile</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="users/settings">
+              <a class="nav-link" href="/users/settings">
                 <i class="ni ni-settings text-default"></i>
                 <span class="nav-link-text">Settings</span>
               </a>
@@ -96,7 +96,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
        <center>
-          <marque class="mb-0 text-sm  font-weight-bold" style="color: white;"><i>"Push yourself because no one else is going to do it for you. One of these 5 a.m's is going to make you a legand"</i></marque>
+          <marque class="mb-0 text-sm  font-weight-bold" style="color: white;"><i>"Push yourself because no one else is going to do it for you. One of these 5 a.m's is going to make you a legend"</i></marque>
         </center>
           <!-- Navbar links -->
           <ul class="navbar-nav align-items-center  ml-md-auto ">
@@ -117,10 +117,7 @@
                 <div class="media align-items-center">
 
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <div class="user-points">
-                      <i style="color:yellow;" class="fas fa-coins points-icon"><p><%= userPoints %> Points</p></i>
-                      
-                    </div>
+                    
                     
                     <span class="mb-0 text-sm  font-weight-bold"><%= username %></span>
                   </div>
@@ -130,16 +127,16 @@
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Welcome!</h6>
                 </div>
-                <a href="#!" class="dropdown-item">
+                <a href="/user/profile/<%- email %>" class="dropdown-item">
                   <i class="ni ni-single-02"></i>
                   <span>My profile</span>
                 </a>
-                <a href="#!" class="dropdown-item">
+                <a href="/users/settings" class="dropdown-item">
                   <i class="ni ni-settings-gear-65"></i>
                   <span>Settings</span>
                 </a>
 
-                <a href="#!" class="dropdown-item">
+                <a href="#" class="dropdown-item">
                   <i class="ni ni-support-16"></i>
                   <span>Support</span>
                 </a>
@@ -274,6 +271,7 @@
       <div class="form-group col-md-12">
         <center>
           <input class="form-control" type="hidden"  name="username" id="username"  value = "<%= username %>" required />
+          <input class="form-control" type="hidden"  name="email" id="username"  value = "<%= email %>" required />
           <button class="btn btn-icon btn-primary" type="submit">
             <span class="btn-inner--icon"><i class="ni ni-atom"></i>&nbsp Join the study room</span>
           </button>

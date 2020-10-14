@@ -63,7 +63,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/users/profilefw">
+                <a class="nav-link" href="/users/profile/<%- email %>">
                   <i class="ni ni-single-02 text-yellow"></i>
                   <span class="nav-link-text">Profile</span>
                 </a>
@@ -117,10 +117,7 @@
                   <div class="media align-items-center">
                    
                     <div class="media-body  ml-2  d-none d-lg-block">
-                      <div class="user-points">
-                        <i style="color:yellow;" class="fas fa-coins points-icon"><p><%= userPoints %> Points</p></i>
-                        
-                      </div>
+                      
                       
                       <span class="mb-0 text-sm  font-weight-bold"><%= username %></span>
                     </div>
@@ -130,16 +127,16 @@
                   <div class="dropdown-header noti-title">
                     <h6 class="text-overflow m-0">Welcome!</h6>
                   </div>
-                  <a href="#!" class="dropdown-item">
+                  <a href="/user/profile/<%- email %>" class="dropdown-item">
                     <i class="ni ni-single-02"></i>
                     <span>My profile</span>
                   </a>
-                  <a href="#!" class="dropdown-item">
+                  <a href="/users/settings" class="dropdown-item">
                     <i class="ni ni-settings-gear-65"></i>
                     <span>Settings</span>
                   </a>
-                
-                  <a href="#!" class="dropdown-item">
+  
+                  <a href="#" class="dropdown-item">
                     <i class="ni ni-support-16"></i>
                     <span>Support</span>
                   </a>

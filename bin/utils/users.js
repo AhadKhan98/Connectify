@@ -4,7 +4,7 @@
 
 const users=[]
 
-const addUser = ({id, username, room}) =>{
+const addUser = ({id, username, room,email}) =>{
 
     room = room.trim().toLowerCase()
 
@@ -14,7 +14,7 @@ const addUser = ({id, username, room}) =>{
         }
     }
 
-    const user={id,username,room}
+    const user={id,username,room,email}
     users.push(user)
     return {user}
 }
@@ -47,14 +47,13 @@ const numberOfUsersInRoom=(room)=>{
 
 const getRoomDescription=(room)=>{
     console.log("ROOM IS " + room)
-    let re = /college:(.*?);subject:(.*?);duration:(.*?);mic:(.*?);video:(.*?);notes:(.*?);/
+    let re = /college:(.*?);subject:(.*?);mic:(.*?);video:(.*?);/
     var description = room.match(re)
     var a = {
       college: description[1],
       subject: description[2],
-      duration: description[3],
-      mic: description[4],
-      video: description[5]
+      mic: description[3],
+      video: description[4]
     }
     return a
 }
