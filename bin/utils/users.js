@@ -1,11 +1,11 @@
 
 
-// 
+//
 
 const users=[]
 
 const addUser = ({id, username, room}) =>{
-   
+
     room = room.trim().toLowerCase()
 
     if(!username || !room ){
@@ -45,10 +45,25 @@ const numberOfUsersInRoom=(room)=>{
     return a
 }
 
+const getRoomDescription=(room)=>{
+    console.log("ROOM IS " + room)
+    let re = /college:(.*?);subject:(.*?);duration:(.*?);mic:(.*?);video:(.*?);notes:(.*?);/
+    var description = room.match(re)
+    var a = {
+      college: description[1],
+      subject: description[2],
+      duration: description[3],
+      mic: description[4],
+      video: description[5]
+    }
+    return a
+}
+
 module.exports={
     addUser,
     getUser,
     getUsersInRoom,
+    getRoomDescription,
     numberOfUsersInRoom,
     removeUser
 }

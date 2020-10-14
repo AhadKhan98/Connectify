@@ -5,7 +5,7 @@ const generateMessage=(message,username)=>{
         username:username
     }
     }
-    
+
     module.exports={
         generateMessage
     }

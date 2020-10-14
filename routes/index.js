@@ -49,7 +49,7 @@ router.post("/signup/submit", function (req, res, next) {
     } else {
       res.redirect("/complete-profile");
     }
-    
+
   });
 });
 
@@ -92,7 +92,7 @@ router.get("/auth/github/callback", function(res, req, next) {
 router.get("/googlesignintoken", function(req,res,next) {
   console.log("GOT GOOGLE SIGN IN TOKEN");
   const google_id_token = req.query.id_token
-  console.log(google_id_token)  
+  console.log(google_id_token)
   firebaseModel.googleSignIn(google_id_token).then(result => {
     if (typeof result === "string") {
       res.render("login", {errorMessage:"Failed to sign in. Please try again."})
@@ -145,7 +145,7 @@ router.get("/checkUserProfile", function (req, res, next) {
       } else {
         res.redirect('/complete-profile');
       }
-    });  
+    });
   } else {
     res.redirect('/');
   };
