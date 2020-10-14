@@ -18,9 +18,9 @@
     What is certain, is that one small action in the world has a definite ripple effect. So we all perhaps need to be more active.
 <br>
 <center>
-<a href="https://github.com/vrushti-mody/connectify/issues">Report Bug</a>
+<a href="https://github.com/AhadKhan98/Connectify/issues">Report Bug</a>
     ·
-    <a href="https://github.com/vrushti-mody/connectify/issues">Submit Feature</a>
+    <a href="https://github.com/AhadKhan98/Connectify/issues">Submit Feature</a>
 </center>
   </p>
 </p>
@@ -30,7 +30,7 @@
 ## Table of Contents
 
 - [About the Project](#about-the-project)
-  - [Set Up](https://github.com/vrushti-mody/Connectify/DEVELOPERS.md)
+  - [Set Up](https://github.com/AhadKhan98/Connectify/blob/master/DEVELOPERS.md)
   - [Tips](#features)
   - [Contributors](#contributors)
 - [Working Demo of the application](#video-demo)
@@ -40,7 +40,7 @@
 
 Our room is open 24/7 (with short resets of a couple of minutes once every 40-48 hours). It is mostly unmoderated and unstructured. The space is your to make it work for you and your time zone.
 <ul>
-    <li>Tackle Lonliness</li>
+    <li>Tackle Loneliness</li>
     <li>Get Support and Encouragement</li>
     <li>Make New Friends</li>
     </ul>
