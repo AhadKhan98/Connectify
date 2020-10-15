@@ -6,6 +6,7 @@ var logger = require('morgan');
 require('custom-env').env()
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const PORT = process.env.PORT || 3000;
 
 var app = express();
 require('dotenv').config()
@@ -37,6 +38,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(PORT, function() {
+  console.log("Server Started Successfuly");
+})
 
 process.on('SIGINT', function() {
   console.log("\nFULL SHUTDOWN OF SERVER");
