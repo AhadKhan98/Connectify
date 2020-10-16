@@ -117,8 +117,8 @@
                 <div class="media align-items-center">
 
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    
-                    
+
+
                     <span class="mb-0 text-sm  font-weight-bold"><%= username %></span>
                   </div>
                 </div>
@@ -163,7 +163,7 @@
         - Do talk during breaks. <br>
         - Turn your camera/mic on if you feel comfortable. <br>
         </p>
-      <form action="/chat" >
+      <form action="/chat">
         <div class="row">
           <div class="form-group col-md-6">
               <label for="example-text-input" class="form-control-label">Preferred College</label>
@@ -232,7 +232,8 @@
               <!-- Input slider values -->
               <div class="row mt-3">
                 <div class="col-6">
-                  <span id="input-slider-value" name="duration" class="range-slider-value" data-range-value-low="20"></span>
+                  <span id="input-slider-value" class="range-slider-value" data-range-value-low="20"></span>
+                  <input class="form-control" type="hidden"  name="duration" id="duration" required />
                 </div>
               </div>
             </div>
@@ -329,6 +330,11 @@
       }
     }
     //slider.noUiSlider.updateOptions(options, true /* Allow destruction + rebuilding */ );
+    $("body").on('DOMSubtreeModified', "#input-slider-value", function () {
+      var raw_duration = $('#input-slider-value').text();
+      console.log(raw_duration);
+      $('#duration').val(Math.round(parseFloat(raw_duration)));
+    })
 
     var goalIndex = 0;
 

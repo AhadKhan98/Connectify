@@ -25,7 +25,7 @@ const email = params.get('email')
 const mic = params.get('mic')? params.get('mic'): 'No'
 const video = params.get('video')? params.get('video'): 'No'
 const notes = params.get('notes')
-const room = "College:" + college + ";Subject:" + subject +  ";Mic:" + mic + ";Video:" + video +";"
+const room = "College:" + college + ";Subject:" + subject +  ";Duration:" + duration + ";Mic:" + mic + ";Video:" + video +";"
 console.log(room)
 // const autoscroll=()=>{
 //     const $newMessage =$messages.lastElementChild
@@ -57,18 +57,18 @@ socket.on('roomdata',({room,users})=>{
 })
 
 document.querySelector('#message-form').addEventListener('submit',(e)=>{
-e.preventDefault()
-$messageFormButton.setAttribute('disabled','disabled')
-const message = document.querySelector('input').value
-socket.emit('send',message,(error)=>{
-    $messageFormButton.removeAttribute('disabled')
-    $messageFormInput.value=" "
-    $messageFormInput.focus()
-    if(error){
-        return console.log(error)
-    }
-    console.log('Message delivered')
-})
+  e.preventDefault()
+  $messageFormButton.setAttribute('disabled','disabled')
+  const message = document.querySelector('input').value
+  socket.emit('send',message,(error)=>{
+      $messageFormButton.removeAttribute('disabled')
+      $messageFormInput.value=" "
+      $messageFormInput.focus()
+      if(error){
+          return console.log(error)
+      }
+      console.log('Message delivered')
+  })
 })
 
 socket.emit('join',{username,room,email},(error)=>{
@@ -77,3 +77,16 @@ socket.emit('join',{username,room,email},(error)=>{
         location.href='/users'
     }
 })
+
+// send the first message using notes
+if (notes) {
+  socket.emit('send',notes,(error)=>{
+      $messageFormButton.removeAttribute('disabled')
+      $messageFormInput.value=" "
+      $messageFormInput.focus()
+      if(error){
+          return console.log(error)
+      }
+      console.log('Message delivered')
+  })
+}
