@@ -1,6 +1,3 @@
-
-
-
 const socket = io()
 
 //Elements
@@ -25,6 +22,7 @@ const email = params.get('email')
 const mic = params.get('mic')? params.get('mic'): 'No'
 const video = params.get('video')? params.get('video'): 'No'
 const notes = params.get('notes')
+const tasks = params.get('tasks')
 const room = "College:" + college + ";Subject:" + subject +  ";Duration:" + duration + ";Mic:" + mic + ";Video:" + video +";"
 console.log(room)
 // const autoscroll=()=>{
@@ -89,4 +87,17 @@ if (notes) {
       }
       console.log('Message delivered')
   })
+}
+
+// fill in tasks
+var taskList = tasks.split("|")
+for (const [index, task] of Object.entries(taskList)) {
+  let html =
+      '<div class="custom-control custom-checkbox">' +
+        '<input type="checkbox" class="custom-control-input" id="' + index + '">' +
+        '<label class="custom-control-label" for="' + index + '" style="height: auto;">' + task.split("(")[0] + '<small class="text-muted"> (Priority ' + task.split("(")[1] + '</small></label>' +
+      '</div>';
+  let elem = document.createElement('li');
+  elem.innerHTML = html;
+  if (task.split("(")[1] != undefined) document.querySelector('.tasks-list').appendChild(elem);
 }

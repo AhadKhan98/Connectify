@@ -157,7 +157,6 @@ router.get("/complete-profile", function (req,res,next) {
   } else {
     res.redirect('/');
   }
-
 });
 
 router.post("/complete-profile/submit", function(req,res,next) {
@@ -178,10 +177,6 @@ router.get('/chat', function(req, res, next) {
     res.redirect('/');
   }
 });
-
-router.post('/goals', function(req, res, next) {
-
-})
 
 
 module.exports = router;
