@@ -47,13 +47,14 @@ const numberOfUsersInRoom=(room)=>{
 
 const getRoomDescription=(room)=>{
     console.log("ROOM IS " + room)
-    let re = /college:(.*?);subject:(.*?);mic:(.*?);video:(.*?);/
+    let re = /college:(.*?);subject:(.*?);duration:(.*?);mic:(.*?);video:(.*?);/
     var description = room.match(re)
     var a = {
       college: description[1],
       subject: description[2],
-      mic: description[3],
-      video: description[4]
+      duration: description[3],
+      mic: description[4],
+      video: description[5]
     }
     return a
 }

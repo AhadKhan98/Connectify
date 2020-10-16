@@ -34,7 +34,7 @@ router.get("/signUp", function (req, res, next) {
   } else {
     res.render("signup", {errorMessage:""});
   }
-  
+
 });
 
 // Form Submit (POST METHOD)
@@ -109,7 +109,7 @@ router.get("/login", function (req, res, next) {
   } else {
     res.render("login", {errorMessage:""});
   }
-  
+
 });
 
 // Form Submit (POST METHOD)
@@ -157,7 +157,7 @@ router.get("/complete-profile", function (req,res,next) {
   } else {
     res.redirect('/');
   }
-  
+
 });
 
 router.post("/complete-profile/submit", function(req,res,next) {
@@ -171,7 +171,7 @@ router.post("/complete-profile/submit", function(req,res,next) {
 /* STUDY ROOM FUNCTIONALITY */
 router.get('/chat', function(req, res, next) {
   if (currentUser) {
-   
+   console.log("JOIN CHAT ROOM")
     res.render('chat', {username:currentUser.displayName, email:currentUser.email});
 
   } else {
@@ -179,7 +179,9 @@ router.get('/chat', function(req, res, next) {
   }
 });
 
+router.post('/goals', function(req, res, next) {
 
+})
 
 
 module.exports = router;
