@@ -91,11 +91,11 @@ if (notes) {
 
 // fill in tasks
 var taskList = tasks.split("|")
-for (task of taskList) {
+for (const [index, task] of Object.entries(taskList)) {
   let html =
       '<div class="custom-control custom-checkbox">' +
-        '<input type="checkbox" class="custom-control-input" id="customCheck1">' +
-        '<label class="custom-control-label" for="customCheck1" style="height: auto;">' + task.split("(")[0] + '<small class="text-muted"> (Priority ' + task.split("(")[1] + '</small></label>' +
+        '<input type="checkbox" class="custom-control-input" id="' + index + '">' +
+        '<label class="custom-control-label" for="' + index + '" style="height: auto;">' + task.split("(")[0] + '<small class="text-muted"> (Priority ' + task.split("(")[1] + '</small></label>' +
       '</div>';
   let elem = document.createElement('li');
   elem.innerHTML = html;
