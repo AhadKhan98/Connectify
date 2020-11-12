@@ -63,6 +63,6 @@ Ensure that you have times allotted in your day when you can work. Even if you a
 - [Ahad Zai](https://github.com/AhadKhan98)
 - [Julia Liu](https://github.com/juliasliu)
 
-### [Video Demo]()
+### [Video Demo](https://youtu.be/izKULVfQdwY)
 
 
